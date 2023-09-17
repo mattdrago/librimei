@@ -35,6 +35,7 @@ export function ShelveBar() {
       >
         {shelveList.map((shelf) => (
           <ShelveTab
+            key={shelf.id}
             shelf={shelf}
             {...(shelf.id === currentShelveID ? { isCurrentShelf: true } : {})}
           />

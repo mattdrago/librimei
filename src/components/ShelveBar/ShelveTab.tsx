@@ -16,7 +16,6 @@ export function ShelveTab({ shelf, isCurrentShelf }: ShelveTabOptions) {
 
   return (
     <div
-      key={shelf.id}
       className={isCurrentShelf ? selectedTabClasses : unSelectedTabClasses}
     >
       {shelf.title}

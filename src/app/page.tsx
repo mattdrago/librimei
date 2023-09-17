@@ -1,5 +1,5 @@
+import { Shelve } from "@/components/Shelve"
+
 export default function Home() {
-  return (
-    <p>The eventual Libri Mei application</p>
-  )
+  return <Shelve id={1} title='All Books'/>
 }
