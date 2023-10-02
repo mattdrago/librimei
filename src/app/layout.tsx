@@ -1,24 +1,24 @@
-import './globals.css'
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import { Header } from '../components/Header'
-import { ShelveBar } from '../components/ShelveBar'
+import "./globals.css";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import { Header } from "../components/Header";
+import { ShelveBar } from "../components/ShelveBar";
 
-import '@fortawesome/fontawesome-svg-core/styles.css';
-import { config } from '@fortawesome/fontawesome-svg-core';
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false;
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Libri Mei - My Books',
-  description: 'Manage your eBook Collection',
-}
+  title: "Libri Mei - My Books",
+  description: "Manage your eBook Collection",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
@@ -28,5 +28,5 @@ export default function RootLayout({
         {children}
       </body>
     </html>
-  )
+  );
 }

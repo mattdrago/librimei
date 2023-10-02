@@ -1,5 +1,5 @@
-import { Shelve } from "@/components/Shelve"
+import { Shelve } from "@/components/Shelve";
 
 export default function Home() {
-  return <Shelve id={1} title='All Books'/>
+  return <Shelve id={1} title="All Books" />;
 }

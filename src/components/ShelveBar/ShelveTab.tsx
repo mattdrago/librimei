@@ -15,9 +15,7 @@ export function ShelveTab({ shelf, isCurrentShelf }: ShelveTabOptions) {
     "px-3 mx-0 border-t-2 border-x-2 rounded-t-2xl border-black border-b-white border-b-2 md:text-2xl text-lg font-bold whitespace-nowrap";
 
   return (
-    <div
-      className={isCurrentShelf ? selectedTabClasses : unSelectedTabClasses}
-    >
+    <div className={isCurrentShelf ? selectedTabClasses : unSelectedTabClasses}>
       {shelf.title}
     </div>
   );

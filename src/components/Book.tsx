@@ -65,7 +65,7 @@ export function Book({ id, coverImage, editions }: BookDetails) {
       </div>
       <div className="text-3xl flex items-center justify-center space-x-6">
         {editions.sort(editionSorter).map((edition: BookEdition) => {
-          return <BookDownloadButton {...edition} />;
+          return <BookDownloadButton key={edition.format} {...edition} />;
         })}
       </div>
     </div>
