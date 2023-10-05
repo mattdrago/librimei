@@ -3,6 +3,8 @@ import { BookDetails } from "./Book";
 export const books: BookDetails[] = [
   {
     id: "1",
+    title: "",
+    author: "",
     coverImage: {
       imageSrc: "/covers/continuous-delivery.jpg",
       width: 525,
@@ -21,6 +23,8 @@ export const books: BookDetails[] = [
   },
   {
     id: "11",
+    title: "",
+    author: "",
     coverImage: {
       imageSrc: "/covers/beautiful-landscapes.jpg",
       width: 499,
@@ -39,6 +43,8 @@ export const books: BookDetails[] = [
   },
   {
     id: "2",
+    title: "",
+    author: "",
     coverImage: {
       imageSrc: "/covers/design-for-developers.jpg",
       width: 1650,
@@ -61,6 +67,8 @@ export const books: BookDetails[] = [
   },
   {
     id: "3",
+    title: "",
+    author: "",
     coverImage: {
       imageSrc:
         "/covers/discrete-distributions-in-engineering-and-the-applied-sciences.jpg",
@@ -84,6 +92,8 @@ export const books: BookDetails[] = [
   },
   {
     id: "4",
+    title: "",
+    author: "",
     coverImage: {
       imageSrc: "/covers/hadoop-in-pracitce.jpg",
       width: 399,
@@ -110,6 +120,8 @@ export const books: BookDetails[] = [
   },
   {
     id: "5",
+    title: "",
+    author: "",
     coverImage: {
       imageSrc: "/covers/introduction-to-information-retrieval.jpg",
       width: 98,
@@ -124,6 +136,8 @@ export const books: BookDetails[] = [
   },
   {
     id: "6",
+    title: "",
+    author: "",
     coverImage: {
       imageSrc: "/covers/java-design-patterns.jpg",
       width: 1241,
@@ -138,6 +152,8 @@ export const books: BookDetails[] = [
   },
   {
     id: "7",
+    title: "",
+    author: "",
     coverImage: {
       imageSrc:
         "/covers/migrating-to-cloud-native-application-architectures.jpg",
@@ -153,6 +169,8 @@ export const books: BookDetails[] = [
   },
   {
     id: "8",
+    title: "",
+    author: "",
     coverImage: {
       imageSrc: "/covers/neo4j-in-action.jpg",
       width: 550,
@@ -167,6 +185,8 @@ export const books: BookDetails[] = [
   },
   {
     id: "9",
+    title: "",
+    author: "",
     coverImage: {
       imageSrc: "/covers/prometheus-up-and-running.jpg",
       width: 1050,
@@ -181,6 +201,8 @@ export const books: BookDetails[] = [
   },
   {
     id: "10",
+    title: "",
+    author: "",
     coverImage: {
       imageSrc: "/covers/the-colour-of-magic.jpg",
       width: 600,

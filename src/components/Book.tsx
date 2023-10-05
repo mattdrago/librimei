@@ -26,6 +26,10 @@ const editionSorter = (a: BookEdition, b: BookEdition) => {
 
 export interface BookDetails {
   id: string;
+  title: string;
+  author: string;
+  description?: string;
+  publisher?: string;
   coverImage: BookCover;
   editions: BookEdition[];
 }
