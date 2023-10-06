@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faFileCode,
   faFilePdf,
   faFileText,
   faFileWord,
@@ -13,7 +14,7 @@ export interface BookCover {
   height: number;
 }
 
-type BookFormat = "epub" | "mobi" | "pdf";
+type BookFormat = "azw" | "epub" | "mobi" | "pdf";
 
 export interface BookEdition {
   format: BookFormat;
@@ -36,6 +37,7 @@ export interface BookDetails {
 
 function BookDownloadButton({ format, url }: BookEdition) {
   const formatToIcon = {
+    azw: faFileCode,
     epub: faFileText,
     mobi: faFileWord,
     pdf: faFilePdf,
