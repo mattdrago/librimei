@@ -1,5 +1,5 @@
 export interface ShelfDetail {
-  id: number;
+  id: string;
   title: string;
 }
 
