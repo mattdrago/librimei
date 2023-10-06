@@ -6,20 +6,20 @@ import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 export function ShelveBar() {
   const shelveList = [
     {
-      id: 1,
+      id: "1",
       title: "All Books",
     },
     {
-      id: 2,
+      id: "2",
       title: "JavaScript",
     },
     {
-      id: 3,
+      id: "3",
       title: "Leadership",
     },
   ];
 
-  const currentShelveID = 1;
+  const currentShelveID = "1";
 
   return (
     <div id="shelveContainer" className="flex">
@@ -40,9 +40,9 @@ export function ShelveBar() {
             {...(shelf.id === currentShelveID ? { isCurrentShelf: true } : {})}
           />
         ))}
-        <ShelveTab shelf={{ id: 0, title: "+" }} />
+        <ShelveTab shelf={{ id: "0", title: "+" }} />
         <div className="border-b-2 inline grow border-black md:text-2xl text-lg" />
-        <ShelveTab shelf={{ id: 0, title: "Search" }} />
+        <ShelveTab shelf={{ id: "0", title: "Search" }} />
       </div>
       <div
         id="selveBarRightScroller"
