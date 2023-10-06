@@ -42,7 +42,7 @@ function BookDownloadButton({ format, url }: BookEdition) {
   };
 
   return (
-    <a title={`Download ${format}`} href={url}>
+    <a title={`Download ${format}`} href={`/download${url}`}>
       <FontAwesomeIcon icon={formatToIcon[format]} />
     </a>
   );
@@ -56,7 +56,7 @@ export function Book({ id, coverImage, editions }: BookDetails) {
     >
       <div className="flex-grow flex items-center justify-center">
         <Image
-          src={coverImage.imageSrc}
+          src={`/cover${coverImage.imageSrc}`}
           width={coverImage.width}
           height={coverImage.height}
           alt="Book Cover"
