@@ -50,7 +50,7 @@ function BookDownloadButton({ format, url }: BookEdition) {
   );
 }
 
-export function Book({ id, coverImage, editions }: BookDetails) {
+export function Book({ id, coverImage, editions, title }: BookDetails) {
   return (
     <div
       id={id}
@@ -61,7 +61,8 @@ export function Book({ id, coverImage, editions }: BookDetails) {
           src={`/cover${coverImage.imageSrc}`}
           width={coverImage.width}
           height={coverImage.height}
-          alt="Book Cover"
+          alt={title}
+          title={title}
           className={
             coverImage.height >= coverImage.width
               ? "w-auto h-60"
