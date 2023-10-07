@@ -4,7 +4,7 @@ import { Low } from "lowdb";
 import { JSONFile } from "lowdb/node";
 
 import { LIBRARY_DB } from "@/services/environment";
-import { BookDetails } from "@/components/Book";
+import { BookDetails } from "@/components/Book/types";
 
 type Data = {
   books: BookDetails[];
