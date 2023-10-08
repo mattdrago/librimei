@@ -18,3 +18,13 @@ await libraryDb.read();
 export const getShelf = cache(async (id?: string) : Promise<BookDetails[]> => {
   return libraryDb.data.books;
 });
+
+export const getBook = cache(async(id: string) : Promise<BookDetails | null> => {
+  const matchingBooks = libraryDb.data.books.filter(book => book.id === id);
+
+  if(matchingBooks.length == 1) {
+    return matchingBooks[0];
+  } else {
+    return null;
+  }
+});

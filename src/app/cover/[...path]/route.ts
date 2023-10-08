@@ -2,12 +2,12 @@ import { NextResponse } from 'next/server';
 
 import { streamFile } from '@/services/Streamer'
 
-interface BookRequestParams {
+interface BookCoverRequestParams {
     path: string[];
 }
 
 interface BookRequest {
-    params: BookRequestParams
+    params: BookCoverRequestParams
 }
 
 
