@@ -18,7 +18,7 @@ export function BookDownloadButton({ format, url }: BookEdition) {
   
     return (
       <a title={`Download ${format}`} href={`/download${url}`}>
-        <FontAwesomeIcon icon={formatToIcon[format]} />
+        <FontAwesomeIcon icon={formatToIcon[format]} className="text-3xl"/>
       </a>
     );
   }

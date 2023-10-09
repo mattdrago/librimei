@@ -6,13 +6,10 @@ import { BookDetails, BookEdition } from "./Book/types";
 import { BookDownloadButton } from "./Book/BookDownloadButton";
 import { BookFullDetails } from "./Book/BookFullDetails";
 import { useState } from "react";
+import { BookDownloadBar } from "./Book/BookDownloadBar";
 
 export function Book({ id, coverImage, editions, title }: BookDetails) {
   const [showDetails, setShowDetails] = useState(false);
-
-  const editionSorter = (a: BookEdition, b: BookEdition) => {
-    return a.format.localeCompare(b.format);
-  };
 
   return (
     <div
@@ -34,11 +31,7 @@ export function Book({ id, coverImage, editions, title }: BookDetails) {
           }
         />
       </div>
-      <div className="text-3xl flex items-center justify-center space-x-6">
-        {editions.sort(editionSorter).map((edition: BookEdition) => {
-          return <BookDownloadButton key={edition.format} {...edition} />;
-        })}
-      </div>
+      <BookDownloadBar editions={editions} />
       <BookFullDetails
         id={id}
         onClose={() => {
