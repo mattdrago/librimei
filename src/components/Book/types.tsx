@@ -19,6 +19,7 @@ export interface BookCover {
     publisher?: string;
     coverImage: BookCover;
     editions: BookEdition[];
+    shelves: string[];
   }
   
   

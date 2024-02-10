@@ -1,12 +1,11 @@
-import { ShelfDetail } from "./ShelveBar/ShelveTab";
 import { Book } from "./Book";
 
-import { getShelf } from '@/services/BookLoader'
+import { getBooksOn } from '@/services/BookLoader'
 
 
-export async function Shelve({ id, title }: ShelfDetail) {
+export async function Shelve({ id }: {id: string}) {
 
-  const books = await getShelf(id);
+  const books = await getBooksOn(id);
 
   return (
     <div

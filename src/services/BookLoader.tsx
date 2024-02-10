@@ -5,6 +5,7 @@ import { JSONFile } from "lowdb/node";
 
 import { LIBRARY_DB } from "@/services/environment";
 import { BookDetails } from "@/components/Book/types";
+import { CustomShelve } from "@/components/ShelveBar";
 
 type Data = {
   books: BookDetails[];
@@ -15,8 +16,12 @@ const defeaultData = { books: [] };
 const libraryDb = new Low(adapter, defeaultData);
 await libraryDb.read();
 
-export const getShelf = cache(async (id?: string) : Promise<BookDetails[]> => {
-  return libraryDb.data.books;
+export const getBooksOn = cache(async (id: string): Promise<BookDetails[]> => {
+  if (id == CustomShelve.ALL) {
+    return libraryDb.data.books;
+  } else {
+    return libraryDb.data.books.filter((book) => book.shelves?.includes(id));
+  }
 });
 
 export const getBook = cache(async(id: string) : Promise<BookDetails | null> => {

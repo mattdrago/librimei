@@ -3,14 +3,16 @@ import { ShelveTab } from "./ShelveBar/ShelveTab";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 
-export function ShelveBar() {
+export const enum CustomShelve {
+  ALL = "ALL",
+  SEARCH = "SEARCH",
+  NEW ="NEW"
+}
+
+export function ShelveBar({ currentShelveID }: { currentShelveID: string }) {
   const shelveList = [
     {
-      id: "1",
-      title: "All Books",
-    },
-    {
-      id: "2",
+      id: "ae5ce751-f963-486d-b050-1d30d5d08b4f",
       title: "JavaScript",
     },
     {
@@ -18,8 +20,6 @@ export function ShelveBar() {
       title: "Leadership",
     },
   ];
-
-  const currentShelveID = "1";
 
   return (
     <div id="shelveContainer" className="flex">
@@ -33,16 +33,17 @@ export function ShelveBar() {
         id="shelveBar"
         className="flex flex-nowrap overflow-hidden flex-row grow"
       >
+        <ShelveTab shelf={{ id: CustomShelve.ALL, title: "All Books" }} selectedShelfId={currentShelveID} />
         {shelveList.map((shelf) => (
           <ShelveTab
             key={shelf.id}
             shelf={shelf}
-            {...(shelf.id === currentShelveID ? { isCurrentShelf: true } : {})}
+            selectedShelfId={currentShelveID}
           />
         ))}
-        <ShelveTab shelf={{ id: "0", title: "+" }} />
+        <ShelveTab shelf={{ id: CustomShelve.NEW, title: "+" }} selectedShelfId={currentShelveID} />
         <div className="border-b-2 inline grow border-black md:text-2xl text-lg" />
-        <ShelveTab shelf={{ id: "0", title: "Search" }} />
+        <ShelveTab shelf={{ id: CustomShelve.SEARCH, title: "Search" }} selectedShelfId={currentShelveID} />
       </div>
       <div
         id="selveBarRightScroller"

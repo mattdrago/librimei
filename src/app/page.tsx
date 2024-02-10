@@ -1,5 +1,11 @@
 import { Shelve } from "@/components/Shelve";
+import { ShelveBar, CustomShelve } from "@/components/ShelveBar";
 
 export default function Home() {
-  return <Shelve id="1" title="All Books" />;
+  return (
+    <>
+      <ShelveBar currentShelveID={CustomShelve.ALL} />
+      <Shelve id={CustomShelve.ALL} />
+    </>
+  );
 }
