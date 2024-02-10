@@ -1,3 +1,5 @@
+"use server"
+
 import { cache } from "react";
 
 import { Low } from "lowdb";
@@ -6,13 +8,15 @@ import { JSONFile } from "lowdb/node";
 import { LIBRARY_DB } from "@/services/environment";
 import { BookDetails } from "@/components/Book/types";
 import { CustomShelve } from "@/components/ShelveBar";
+import { ShelfDetail } from "@/components/ShelveBar/ShelveTab";
 
 type Data = {
   books: BookDetails[];
+  shelves: ShelfDetail[]
 };
 
 const adapter = new JSONFile<Data>(LIBRARY_DB);
-const defeaultData = { books: [] };
+const defeaultData = { books: [], shelves: [] };
 const libraryDb = new Low(adapter, defeaultData);
 await libraryDb.read();
 
@@ -32,4 +36,8 @@ export const getBook = cache(async(id: string) : Promise<BookDetails | null> => 
   } else {
     return null;
   }
+});
+
+export const getShelves = cache(async(): Promise<ShelfDetail[]> => {
+  return libraryDb.data.shelves;
 });

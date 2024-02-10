@@ -1,4 +1,5 @@
 import { ShelveTab } from "./ShelveBar/ShelveTab";
+import { getShelves } from "@/services/BookLoader";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
@@ -9,17 +10,9 @@ export const enum CustomShelve {
   NEW ="NEW"
 }
 
-export function ShelveBar({ currentShelveID }: { currentShelveID: string }) {
-  const shelveList = [
-    {
-      id: "ae5ce751-f963-486d-b050-1d30d5d08b4f",
-      title: "JavaScript",
-    },
-    {
-      id: "3",
-      title: "Leadership",
-    },
-  ];
+export async function ShelveBar({ currentShelveID }: { currentShelveID: string }) {
+
+  const shelveList = await getShelves();
 
   return (
     <div id="shelveContainer" className="flex">
