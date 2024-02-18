@@ -6,6 +6,7 @@ import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 
 export const enum CustomShelve {
   ALL = "ALL",
+  ADD_BOOK = "ADD_BOOK",
   SEARCH = "SEARCH",
   NEW ="NEW"
 }
@@ -37,6 +38,7 @@ export async function ShelveBar({ currentShelveID }: { currentShelveID: string }
         <ShelveTab shelf={{ id: CustomShelve.NEW, title: "+" }} selectedShelfId={currentShelveID} />
         <div className="border-b-2 inline grow border-black md:text-2xl text-lg" />
         <ShelveTab shelf={{ id: CustomShelve.SEARCH, title: "Search" }} selectedShelfId={currentShelveID} />
+        <ShelveTab shelf={{ id: CustomShelve.ADD_BOOK, title: "Add Book" }} selectedShelfId={currentShelveID} />
       </div>
       <div
         id="selveBarRightScroller"

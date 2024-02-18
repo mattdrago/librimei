@@ -1,7 +1,7 @@
 "use client";
 
-import { useRouter } from 'next/navigation'
-import { CustomShelve } from '../ShelveBar';
+import { useRouter } from "next/navigation";
+import { CustomShelve } from "../ShelveBar";
 export interface ShelfDetail {
   id: string;
   title: string;
@@ -12,11 +12,8 @@ export interface ShelveTabOptions {
   selectedShelfId: string;
 }
 
-export function ShelveTab({
-  shelf,
-  selectedShelfId,
-}: ShelveTabOptions) {
-  const router = useRouter()
+export function ShelveTab({ shelf, selectedShelfId }: ShelveTabOptions) {
+  const router = useRouter();
 
   const unSelectedTabClasses =
     "px-3 mx-0.25 border-2 rounded-t-2xl border-b-black md:text-2xl text-lg hover:[text-shadow:_0px_0px_1px_rgb(0_0_0)] cursor-pointer whitespace-nowrap";
@@ -26,12 +23,14 @@ export function ShelveTab({
   const isCurrentShelf = selectedShelfId == shelf.id;
 
   const changeShelf = () => {
-    if(shelf.id == CustomShelve.ALL) {
-      router.push('/');
+    if (shelf.id == CustomShelve.ALL) {
+      router.push("/");
+    } else if (shelf.id == CustomShelve.ADD_BOOK) {
+      router.push("/add_book");
     } else {
       router.push(`/shelf/${shelf.id}`);
     }
-  }
+  };
 
   return (
     <div
