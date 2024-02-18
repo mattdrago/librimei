@@ -2,8 +2,7 @@
 
 import Image from "next/image";
 
-import { BookDetails, BookEdition } from "./Book/types";
-import { BookDownloadButton } from "./Book/BookDownloadButton";
+import { BookDetails } from "./Book/types";
 import { BookFullDetails } from "./Book/BookFullDetails";
 import { useState } from "react";
 import { BookDownloadBar } from "./Book/BookDownloadBar";
