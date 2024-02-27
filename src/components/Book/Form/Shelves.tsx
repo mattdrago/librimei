@@ -2,14 +2,14 @@ export function Shelves() {
   return (
     <div className="flex">
       <div className="w-1/6">
-        <label htmlFor="title">Shelves</label>
+        <label htmlFor="shelves">Shelves</label>
       </div>
       <div className="w-5/6">
         <input
           type="text"
-          name="title"
-          id="title"
-          placeholder="Books title"
+          name="shelves"
+          id="shelves"
+          placeholder="shelves"
           className="border w-full"
         />
       </div>
