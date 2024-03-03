@@ -18,7 +18,7 @@ export function Book({ id, coverImage, editions, title }: BookDetails) {
     >
       <div className="flex-grow flex items-center justify-center">
         <Image
-          src={`/cover${coverImage.imageSrc}`}
+          src={`/book/${id}/cover`}
           width={coverImage.width}
           height={coverImage.height}
           alt={title}

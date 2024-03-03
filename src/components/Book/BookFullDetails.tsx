@@ -52,7 +52,7 @@ export function BookFullDetails({ id, onClose, open }: BookFullDetailsProps) {
         <div className="flex p-4 md:flex-row flex-col space-x-6">
           <div className="flex-initial basis-2/5">
             <Image
-              src={`/cover${data.coverImage.imageSrc}`}
+              src={`/book/${id}/cover`}
               width={data.coverImage.width}
               height={data.coverImage.height}
               alt={data.title}
