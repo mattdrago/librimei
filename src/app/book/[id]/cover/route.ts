@@ -4,15 +4,15 @@ import { streamFile } from '@/services/Streamer'
 import { getBook } from '@/services/BookLoader';
 
 
-interface BookCoverRequestParams {
+interface BookCoverRequest {
     id: string;
 }
 
-interface BookCoverRequest {
-    params: BookCoverRequestParams;
+interface BookCoverRequestParams {
+    params: BookCoverRequest;
 }
 
-export async function GET(request: Request, { params: { id } }: BookCoverRequest): Promise<NextResponse> {
+export async function GET(request: Request, { params: { id } }: BookCoverRequestParams): Promise<NextResponse> {
 
     const book = await getBook(id);
 
