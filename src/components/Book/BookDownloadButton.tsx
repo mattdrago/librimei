@@ -22,7 +22,7 @@ export function BookDownloadButton({ format , bookId }: BookDownloadButtonProps,
   };
 
   return (
-    <a title={`Download ${format}`} href={`/book/${bookId}/edition/${format}`}>
+    <a title={`Download ${format}`} href={`/book/${bookId}/edition/${format}`} onClick={(e) => e.stopPropagation()}>
       <FontAwesomeIcon icon={formatToIcon[format]} className="text-3xl" />
     </a>
   );
