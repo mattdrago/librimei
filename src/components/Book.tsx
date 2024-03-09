@@ -30,7 +30,7 @@ export function Book({ id, coverImage, editions, title }: BookDetails) {
           }
         />
       </div>
-      <BookDownloadBar editions={editions} />
+      <BookDownloadBar editions={editions} bookId={id} />
       <BookFullDetails
         id={id}
         onClose={() => {

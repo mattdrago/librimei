@@ -10,7 +10,7 @@ export interface BookCover {
   height: number;
 }
 
-type BookFormat = "azw" | "epub" | "mobi" | "pdf";
+export type BookFormat = "azw" | "epub" | "mobi" | "pdf";
 
 export interface BookEdition {
   format: BookFormat;

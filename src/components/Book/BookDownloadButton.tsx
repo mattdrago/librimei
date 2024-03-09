@@ -6,10 +6,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { libreIconsEpubFile } from "./types";
+import { BookFormat } from "./types"; 
 
-import { BookEdition } from "./types";
+interface BookDownloadButtonProps {
+  format: BookFormat;
+  bookId: string
+}
 
-export function BookDownloadButton({ format, url }: BookEdition) {
+export function BookDownloadButton({ format , bookId }: BookDownloadButtonProps, ) {
   const formatToIcon = {
     azw: faFileCode,
     epub: libreIconsEpubFile,
@@ -18,7 +22,7 @@ export function BookDownloadButton({ format, url }: BookEdition) {
   };
 
   return (
-    <a title={`Download ${format}`} href={`/download${url}`}>
+    <a title={`Download ${format}`} href={`/book/${bookId}/edition/${format}`}>
       <FontAwesomeIcon icon={formatToIcon[format]} className="text-3xl" />
     </a>
   );

@@ -65,7 +65,7 @@ export function BookFullDetails({ id, onClose, open }: BookFullDetailsProps) {
             <div className="text-2xl italic">{data.author.join(",")}</div>
             <div className="text-lg">{data.publisher}</div>
             <div>{data.description}</div>
-            <BookDownloadBar editions={data.editions} />
+            <BookDownloadBar editions={data.editions} bookId={id}/>
           </div>
         </div>
       )}
