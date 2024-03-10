@@ -7,8 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "package": "podman build -t libri-mei .",
-    "runpod": "podman run -p 3000:3000 -v /home/matt/ebookLibrary/libraryNew:/library libri-mei"
+    "package": "podman build -t holly:5000/libri-mei . && podman save --output libre-mei-container.tar libri-mei",
+    "runpod": "podman run -d -p 3000:3000 -v /home/matt/ebookLibrary/libraryNew:/library holly:5000/libri-mei",
+    "dist": "podman push holly:5000/libri-mei --tls-verify=false"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
