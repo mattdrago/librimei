@@ -48,6 +48,12 @@
         </xsl:call-template>
         <xsl:text>",&#10;</xsl:text>
 
+        <xsl:text>  "publication_date": "</xsl:text>
+        <xsl:call-template name="yearonly">
+            <xsl:with-param name="value" select="opf:metadata/dc:date" />
+        </xsl:call-template>
+        <xsl:text>",&#10;</xsl:text>
+
         <xsl:call-template name="cover" />
 
         <xsl:text>  "editions": [&#10;</xsl:text>
@@ -120,5 +126,15 @@
         <xsl:param name="value" />
 
         <xsl:value-of select="fn:replace(fn:replace($value, '&quot;', ''), '[\r\n]+', '\\n')"/>
+    </xsl:template>
+
+    <xsl:template name="yearonly">
+        <xsl:param name="value" />
+
+        <xsl:variable name="pubdate" select="fn:format-dateTime($value, '[Y0001]')" />
+
+        <xsl:if test="$pubdate > 1700">
+            <xsl:value-of select="$pubdate" />
+        </xsl:if>
     </xsl:template>
 </xsl:stylesheet>
