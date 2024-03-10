@@ -19,8 +19,7 @@ SEPARATOR=""
 for OPF_FILE in `find "${LIBRARY_DIR}" -name "*.opf"`; do
 
     BOOK_DIR=`dirname "${OPF_FILE}"`
-
-    COMMAND="java -cp saxon-he-12.3.jar net.sf.saxon.Transform -s:\"${OPF_FILE}\" -xsl:transform.xsl"
+    COMMAND="java -cp saxon-he-12.4.jar net.sf.saxon.Transform -s:\"${OPF_FILE}\" -xsl:transform.xsl"
 
     AZW_FILE=`find "${BOOK_DIR}" -name "*.azw[3]*"`
     EPUB_FILE=`find "${BOOK_DIR}" -name "*.epub"`
