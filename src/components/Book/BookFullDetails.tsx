@@ -31,6 +31,9 @@ export function BookFullDetails({ id, onClose, open }: BookFullDetailsProps) {
   useEffect(() => {
     if (open) {
       dialogRef.current?.showModal();
+      document.body.classList.add('overflow-hidden');
+    } else {
+      document.body.classList.remove('overflow-hidden');
     }
   }, [open]);
 
@@ -40,7 +43,7 @@ export function BookFullDetails({ id, onClose, open }: BookFullDetailsProps) {
       onClose={handleClose}
       onCancel={handleClose}
       // onClick={handleClose}
-      className="cursor-default"
+      className="cursor-default overscroll-none"
     >
       <div
         className="cursor-pointer absolute top-1 right-2 text-xl hover:scale-125 transition ease-in-out"
