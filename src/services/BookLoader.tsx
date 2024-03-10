@@ -39,7 +39,7 @@ export const getBook = cache(async(id: string) : Promise<BookDetails | null> => 
 });
 
 export const getShelves = cache(async(): Promise<ShelfDetail[]> => {
-  return libraryDb.data.shelves;
+  return libraryDb.data.shelves ? libraryDb.data.shelves : [];
 });
 
 export const getPublishers = cache(async(): Promise<string[]> => {
