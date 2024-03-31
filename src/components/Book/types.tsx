@@ -25,6 +25,7 @@ export interface BookDetails {
   publisher?: string;
   coverImage: BookCover;
   editions: BookEdition[];
+  subject: string[];
   shelves: string[];
 }
 

@@ -28,6 +28,12 @@ export const getBooksOn = cache(async (id: string): Promise<BookDetails[]> => {
   }
 });
 
+export const getSubjectsOn = cache(async (id: string): Promise<string[]> => {
+  const books = await getBooksOn(id);
+
+  return Array.from(new Set(books.filter((book) => book.subject.length > 0).flatMap((book) => book.subject))).sort();
+});
+
 export const getBook = cache(async(id: string) : Promise<BookDetails | null> => {
   const matchingBooks = libraryDb.data.books.filter(book => book.id === id);
 
