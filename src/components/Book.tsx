@@ -13,9 +13,12 @@ export function Book({ id, coverImage, editions, title }: BookDetails) {
   return (
     <div
       id={id}
-      className="border-2 pb-1 rounded-md shadow-lg w-64 h-80 relative justify-around content-center flex flex-col cursor-pointer hover:scale-105 transition ease-in-out"
+      className="border-2 rounded-md shadow-lg w-64 relative justify-around content-center flex flex-col cursor-pointer hover:scale-105 transition ease-in-out"
       onClick={() => setShowDetails(true)}
     >
+      <div className="pl-1 pr-1 mb-3 text-lg text-center text-ellipsis overflow-hidden bg-gray-100 rounded-t-sm">
+        {title}
+      </div>
       <div className="flex-grow flex items-center justify-center">
         <Image
           src={`/book/${id}/cover`}
@@ -30,7 +33,11 @@ export function Book({ id, coverImage, editions, title }: BookDetails) {
           }
         />
       </div>
-      <BookDownloadBar editions={editions} bookId={id} />
+      <BookDownloadBar
+        editions={editions}
+        bookId={id}
+        className="mt-3 pt-2 pb-1 bg-gray-100 rounded-b-sm"
+      />
       <BookFullDetails
         id={id}
         onClose={() => {
