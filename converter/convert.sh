@@ -52,14 +52,18 @@ for OPF_FILE in `find "${LIBRARY_DIR}" -name "*.opf"`; do
     EPUB_FILE=`find "${BOOK_DIR}" -name "*.epub"`
     MOBI_FILE=`find "${BOOK_DIR}" -name "*.mobi"`
     PDF_FILE=`find "${BOOK_DIR}" -name "*.pdf"`
-    JPG_FILE=`find "${BOOK_DIR}" -name "*.jpg"`
+    IMAGE_FILE=`find "${BOOK_DIR}" -name "*.jpg"`
+
+    if [ -z "${IMAGE_FILE}" ]; then
+        IMAGE_FILE=`find "${BOOK_DIR}" -name "*.png"`
+    fi
 
     [ -n "${AZW_FILE}" ] && COMMAND+=" azw=\"${AZW_FILE/${CLEAN_ROOT_DIR}/}\"";
     [ -n "${EPUB_FILE}" ] && COMMAND+=" epub=\"${EPUB_FILE/${CLEAN_ROOT_DIR}/}\"";
     [ -n "${MOBI_FILE}" ] && COMMAND+=" mobi=\"${MOBI_FILE/${CLEAN_ROOT_DIR}/}\"";
     [ -n "${PDF_FILE}" ] && COMMAND+=" pdf=\"${PDF_FILE/${CLEAN_ROOT_DIR}/}\"";
-    [ -n "${JPG_FILE}" ] && COMMAND+=" image=\"${JPG_FILE/${CLEAN_ROOT_DIR}/}\"";
-    [ -n "${JPG_FILE}" ] && COMMAND+=" `identify -format 'width=%w height=%h' ${JPG_FILE}`"
+    [ -n "${IMAGE_FILE}" ] && COMMAND+=" image=\"${IMAGE_FILE/${CLEAN_ROOT_DIR}/}\"";
+    [ -n "${IMAGE_FILE}" ] && COMMAND+=" `identify -format 'width=%w height=%h' ${IMAGE_FILE}`"
 
     echo "$SEPARATOR"
     eval "${COMMAND}"
