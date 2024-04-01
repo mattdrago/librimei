@@ -1,0 +1,37 @@
+import Select from "react-select";
+import { BookDetails } from "../Book/types";
+import { useId } from "react";
+
+export function ShelveFilter({
+  books,
+  onFilter,
+}: {
+  books: BookDetails[];
+  onFilter: any;
+}) {
+  const subjects = Array.from(
+    new Set(
+      books
+        .filter((book) => book.subject.length > 0)
+        .flatMap((book) => book.subject)
+    )
+  )
+    .sort()
+    .map((subject) => {
+      return { value: subject, label: subject };
+    })
+    .toSpliced(0, 0, { value: "", label: "-- Clear Filter --" });
+
+  useId();
+  return (
+    <div className="border-2 rounded-md shadow-lg mt-10 mx-10 p-1">
+      <Select
+        instanceId={useId()}
+        options={subjects}
+        onChange={(e) => {
+          onFilter(e?.value);
+        }}
+      />
+    </div>
+  );
+}

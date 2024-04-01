@@ -1,21 +1,22 @@
+"use client";
+
+import { useState } from "react";
 import { Book } from "./Book";
+import { BookDetails } from "./Book/types";
+import { ShelveFilter } from "./Shelve/ShelveFilter";
 
-import { getBooksOn, getSubjectsOn } from "@/services/BookLoader";
+export function Shelve({ id, books }: { id: string, books: BookDetails[] }) {
 
-export async function Shelve({ id }: { id: string }) {
-  const books = await getBooksOn(id);
-  const subjects = await getSubjectsOn(id);
+  const [filterSubject, setFilterSubject] = useState('');
 
   return (
     <>
-      <div className="border-2 rounded-md shadow-lg mt-10 mx-10 p-1">
-        {subjects.join(", ")}
-      </div>
+      <ShelveFilter books={books} onFilter={setFilterSubject}/>
       <div
         id={`shelf_${id}`}
         className="flex flex-wrap justify-between gap-10 p-10"
       >
-        {books.map((book) => (
+        {books.filter(book => filterSubject == '' || book.subject.includes(filterSubject)).map((book) => (
           <Book key={book.id} {...book} />
         ))}
       </div>
