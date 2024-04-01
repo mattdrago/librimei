@@ -7,7 +7,7 @@ export function ShelveFilter({
   onFilter,
 }: {
   books: BookDetails[];
-  onFilter: any;
+  onFilter: (a: string[]) => void;
 }) {
   const subjects = Array.from(
     new Set(
@@ -19,18 +19,19 @@ export function ShelveFilter({
     .sort()
     .map((subject) => {
       return { value: subject, label: subject };
-    })
-    .toSpliced(0, 0, { value: "", label: "-- Clear Filter --" });
+    });
 
-  useId();
   return (
     <div className="border-2 rounded-md shadow-lg mt-10 mx-10 p-1">
       <Select
         instanceId={useId()}
         options={subjects}
-        onChange={(e) => {
-          onFilter(e?.value);
+        onChange={(newValues) => {
+          onFilter(newValues.map((v) => v.value));
         }}
+        isClearable
+        isSearchable
+        isMulti
       />
     </div>
   );
