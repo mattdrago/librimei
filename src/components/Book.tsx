@@ -28,8 +28,8 @@ export function Book({ id, coverImage, editions, title }: BookDetails) {
           title={title}
           className={
             coverImage.height >= coverImage.width
-              ? "w-auto h-60"
-              : "h-auto w-52"
+              ? "w-auto h-60 border-2"
+              : "h-auto w-52 border-2"
           }
         />
       </div>

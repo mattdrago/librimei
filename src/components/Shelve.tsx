@@ -12,7 +12,6 @@ export function Shelve({ id, books }: { id: string; books: BookDetails[] }) {
     if (subjects.length == 0) {
       setBooksToDisplay(books);
     } else {
-      console.log(`Filter on ${subjects}`);
       setBooksToDisplay(
         books.filter((book) =>
           subjects.every((subject) => book.subject.includes(subject))
@@ -26,7 +25,7 @@ export function Shelve({ id, books }: { id: string; books: BookDetails[] }) {
       <ShelveFilter books={booksToDisplay} onFilter={filterBooks} />
       <div
         id={`shelf_${id}`}
-        className="flex flex-wrap justify-between gap-10 p-10"
+        className="flex flex-wrap justify-start gap-10 p-10"
       >
         {booksToDisplay.map((book) => (
           <Book key={book.id} {...book} />
