@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import useSWR from "swr";
+import useSWR, { Fetcher } from "swr";
 import Image from "next/image";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { BookDownloadBar } from "./BookDownloadBar";
+import { BookDetails } from "./types";
+import { BookSubjectBar } from "./BookSubjects";
 
 interface BookFullDetailsProps {
   id: string;
@@ -17,7 +19,7 @@ interface BookFullDetailsProps {
 export function BookFullDetails({ id, onClose, open }: BookFullDetailsProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  const fetcher = (path: string) => fetch(path).then((res) => res.json());
+  const fetcher: Fetcher<BookDetails, string> = (path: string) => fetch(path).then((res) => res.json());
   const { data, error, isLoading } = useSWR(
     open ? `/book/${id}` : null,
     fetcher
@@ -67,6 +69,7 @@ export function BookFullDetails({ id, onClose, open }: BookFullDetailsProps) {
             <div className="text-4xl font-bold">{data.title}</div>
             <div className="text-2xl italic">{data.author.join(",")}</div>
             <div className="text-lg">{data.publisher}</div>
+            <BookSubjectBar subjects={data.subject} />
             <div className="flex-grow">{data.description}</div>
             <BookDownloadBar editions={data.editions} bookId={id}/>
           </div>
