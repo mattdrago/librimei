@@ -53,7 +53,7 @@ export function BookFullDetails({ id, onClose, open }: BookFullDetailsProps) {
       </div>
       {data && (
         <div className="flex p-4 md:flex-row flex-col space-x-6">
-          <div className="flex-initial basis-2/5">
+          <div className="flex-initial md:basis-2/5">
             <Image
               src={`/book/${id}/cover`}
               width={data.coverImage.width}
@@ -63,11 +63,11 @@ export function BookFullDetails({ id, onClose, open }: BookFullDetailsProps) {
               className="border-2 p-2 rounded-md shadow-lg md:min-w-[32rem] min-w-full"
             />
           </div>
-          <div className="flex flex-col space-y-3 basis-3/5">
+          <div className="flex flex-col space-y-3 md:basis-3/5">
             <div className="text-4xl font-bold">{data.title}</div>
             <div className="text-2xl italic">{data.author.join(",")}</div>
             <div className="text-lg">{data.publisher}</div>
-            <div>{data.description}</div>
+            <div className="flex-grow">{data.description}</div>
             <BookDownloadBar editions={data.editions} bookId={id}/>
           </div>
         </div>
