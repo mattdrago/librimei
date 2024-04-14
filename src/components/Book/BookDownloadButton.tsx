@@ -21,8 +21,12 @@ export function BookDownloadButton({ format , bookId }: BookDownloadButtonProps,
     pdf: faFilePdf,
   };
 
+  function downloadBook() {
+    window.location.href = `/book/${bookId}/edition/${format}`;
+  }
+
   return (
-    <a title={`Download ${format}`} href={`/book/${bookId}/edition/${format}`} onClick={(e) => e.stopPropagation()}>
+    <a title={`Download ${format}`} onClick={(e) => { e.stopPropagation(); downloadBook()}} className="hover:cursor-pointer hover:scale-125 transition ease-in-out">
       <FontAwesomeIcon icon={formatToIcon[format]} className="text-3xl" />
     </a>
   );
