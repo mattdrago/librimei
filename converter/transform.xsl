@@ -77,6 +77,18 @@
             <xsl:with-param name="url" select="$pdf" />
             <xsl:with-param name="withcomma" select="0" />
         </xsl:call-template>
+        <xsl:text>  ],&#10;</xsl:text>
+
+        <xsl:text>  "subject": [&#10;</xsl:text>
+        <xsl:for-each select="opf:metadata/dc:subject">
+            <xsl:text>    "</xsl:text>
+            <xsl:value-of select="."/>
+            <xsl:text>"</xsl:text>
+            <xsl:choose>
+                <xsl:when test="position()!=last()"><xsl:text>,</xsl:text></xsl:when>
+            </xsl:choose>
+            <xsl:text>&#10;</xsl:text>
+        </xsl:for-each>
         <xsl:text>  ]&#10;</xsl:text>
 
         <xsl:text>}&#10;</xsl:text>
