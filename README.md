@@ -16,6 +16,10 @@ Libri Mei provides functionality to manage a centralised collection of eBooks.  
 - Users
 - Global vs User shelves
 
+## Development
+- Naming convention for branches: feature/&lt;name-of-feature&gt;
+- To run the app on the local machine, run `yarn run dev`
+
 ## Installation
 
 ## Usage
