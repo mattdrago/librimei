@@ -1,8 +1,5 @@
 import { Cinzel_Decorative } from "next/font/google";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCog } from "@fortawesome/free-solid-svg-icons";
-
 import Image from "next/image";
 
 const cinzel = Cinzel_Decorative({
@@ -26,7 +23,6 @@ export function Header() {
         alt="profile image"
         className="md:w-24 md:h-24 w-16 h-16 rounded-full md:mr-4 mr-2"
       />
-      <FontAwesomeIcon icon={faCog} />
     </div>
   );
 }
