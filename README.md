@@ -16,6 +16,9 @@ Libri Mei provides functionality to manage a centralised collection of eBooks.  
 - Users
 - Global vs User shelves
 
+## Development
+- Naming convention for branches: feature/&lt;name-of-feature&gt;
+
 ## Installation
 
 ## Usage
