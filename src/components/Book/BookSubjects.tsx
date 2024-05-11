@@ -1,15 +1,37 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faSave, faCancel } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 
 export function BookSubjectBar({subjects} : {subjects : string[]}) {
-    function startEditMode() {}
+      
+    var [editMode, setEditMode] = useState(false);
 
-    return <div className="flex flex-wrap justify-start gap-2 relative">
-      <div className="cursor-pointer absolute top-0 right-1 text-xl" onClick={startEditMode}>
-        <FontAwesomeIcon icon={faPencil} className="absolute top-0 right-0" />
-      </div>
+    function startEditMode() {
+        setEditMode(true);
+    }
+
+    function saveEdits() {
+        setEditMode(false);
+    }
+
+    function undoEdits() {
+        setEditMode(false);
+    }
+
+    var viewButtons = <FontAwesomeIcon icon={faPencil} onClick={startEditMode}/>;
+    var editButtons = <>
+        <FontAwesomeIcon icon={faSave} onClick={saveEdits}/>
+        <FontAwesomeIcon icon={faCancel} onClick={undoEdits}/>
+    </>;
+
+    return <div className="flex flex-row ">
+      <div className="flex flex-wrap justify-start gap-2 flex-grow">
         {subjects.map((subject) => {
             return <span key={subject} className="text-sm px-1 border rounded-lg">{subject}</span>;
         })}
+      </div>
+      <div className="cursor-pointer text-xl">
+          {editMode ? editButtons : viewButtons }
+      </div>
     </div>
 }
