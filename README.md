@@ -10,7 +10,6 @@ Libri Mei provides functionality to manage a centralised collection of eBooks.  
 - Add / Remove books
 - Metatdata management
   - Utilise free/open APIs
-- Book search
 - Add / Remove shelves
 - Add / Remove books from shelves
 - Users
