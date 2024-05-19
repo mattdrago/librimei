@@ -45,3 +45,7 @@ export const getShelves = cache(async(): Promise<ShelfDetail[]> => {
 export const getPublishers = cache(async(): Promise<string[]> => {
   return Array.from(new Set(libraryDb.data.books.filter(book => book.publisher).map(book => book.publisher as string))).sort();
 });
+
+export const getSubjects = cache(async(): Promise<string[]> => {
+  return Array.from(new Set(libraryDb.data.books.filter(book => book.subject && book.subject.length > 0).flatMap(book => book.subject))).sort();
+})
