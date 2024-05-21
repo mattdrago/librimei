@@ -5,7 +5,7 @@ import {
   faFileWord,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { libreIconsEpubFile } from "./types";
+import { libriIconsEpubFile } from "./types";
 import { BookFormat } from "./types"; 
 
 interface BookDownloadButtonProps {
@@ -16,7 +16,7 @@ interface BookDownloadButtonProps {
 export function BookDownloadButton({ format , bookId }: BookDownloadButtonProps, ) {
   const formatToIcon = {
     azw: faFileCode,
-    epub: libreIconsEpubFile,
+    epub: libriIconsEpubFile,
     mobi: faFileWord,
     pdf: faFilePdf,
   };
