@@ -14,7 +14,7 @@ export function Header() {
       <h1
         className={`${cinzel.className} small-caps md:text-8xl text-7xl md:pl-8 pl-4 grow`}
       >
-        Libre Mei
+        Libri Mei
       </h1>
       <Image
         width={96}
