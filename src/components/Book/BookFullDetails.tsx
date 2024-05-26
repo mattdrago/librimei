@@ -26,7 +26,16 @@ export function BookFullDetails({ id, onClose, open }: BookFullDetailsProps) {
       setLoadedData(data);
   }
 
+  async function saveBook() {
+    fetch(`/book/${id}`, {
+      method: 'PATCH',
+      headers: { "Content-Type" : "application/json" },
+      body: JSON.stringify(displayData)
+    })
+  }
+
   const handleClose = () => {
+    undoEdits();
     dialogRef.current?.close();
     onClose();
   };
@@ -36,7 +45,7 @@ export function BookFullDetails({ id, onClose, open }: BookFullDetailsProps) {
   }
 
   function saveEdits() {
-    // Need to do the real save here!
+    saveBook();
     setLoadedData(displayData);
     setEditMode(false);
   }
