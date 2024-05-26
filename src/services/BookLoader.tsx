@@ -2,8 +2,7 @@
 
 import { cache } from "react";
 
-import { Low } from "lowdb";
-import { JSONFile } from "lowdb/node";
+import { JSONFilePreset } from "lowdb/node";
 
 import { LIBRARY_DB } from "@/services/environment";
 import { BookDetails } from "@/components/Book/types";
@@ -15,10 +14,8 @@ type Data = {
   shelves: ShelfDetail[]
 };
 
-const adapter = new JSONFile<Data>(LIBRARY_DB);
 const defeaultData = { books: [], shelves: [] };
-const libraryDb = new Low(adapter, defeaultData);
-await libraryDb.read();
+const libraryDb = await JSONFilePreset<Data>(LIBRARY_DB, defeaultData);
 
 export const getBooksOn = cache(async (id: string): Promise<BookDetails[]> => {
   if (id == CustomShelve.ALL) {
@@ -36,6 +33,16 @@ export const getBook = cache(async(id: string) : Promise<BookDetails | null> => 
   } else {
     return null;
   }
+});
+
+export const updateBook = cache(async(book: BookDetails) : Promise<void> => {
+  libraryDb.update((data : Data) => {
+    var bookIndex = data.books.findIndex(curBook => curBook.id == book.id);
+
+    if(bookIndex != -1) {
+      data.books[bookIndex] = book;
+    }
+  })
 });
 
 export const getShelves = cache(async(): Promise<ShelfDetail[]> => {
