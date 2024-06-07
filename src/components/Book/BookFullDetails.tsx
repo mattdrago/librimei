@@ -7,7 +7,7 @@ import { BookDownloadBar } from "./BookDownloadBar";
 import { BookDetails } from "./types";
 import { BookSubjectBar } from "./BookSubjects";
 import { BookFullDetailsMenu } from "./BookFullDetailsMenu";
-import { bookAPI } from "@/services/BookAPI";
+import { BookAPIError, bookAPI } from "@/services/BookAPI";
 
 interface BookFullDetailsProps {
   id: string;
@@ -20,16 +20,8 @@ export function BookFullDetails({ id, onClose, open }: BookFullDetailsProps) {
   var [editMode, setEditMode] = useState(false);
   var [loadedData, setLoadedData] = useState<BookDetails>();
   var [displayData, setDisplayData] = useState<BookDetails>();
-  var [error, setError] = useState<Error>();
+  var [error, setError] = useState<BookAPIError>();
   
-  async function saveBook() {
-    fetch(`/book/${id}`, {
-      method: 'PATCH',
-      headers: { "Content-Type" : "application/json" },
-      body: JSON.stringify(displayData)
-    })
-  }
-
   const handleClose = () => {
     undoEdits();
     dialogRef.current?.close();
@@ -41,9 +33,14 @@ export function BookFullDetails({ id, onClose, open }: BookFullDetailsProps) {
   }
 
   function saveEdits() {
-    saveBook();
-    setLoadedData(displayData);
-    setEditMode(false);
+    if(displayData) {
+      bookAPI.saveBook(displayData).then(() => {
+        setLoadedData(displayData);
+        setEditMode(false);
+      }).catch((e) => {
+        setError(e);
+      });
+    }
   }
 
   function undoEdits() {
@@ -68,10 +65,11 @@ export function BookFullDetails({ id, onClose, open }: BookFullDetailsProps) {
         setError(undefined);
       }).catch((e) => {
         setError(e);
+      }).finally(() => {
+        dialogRef.current?.showModal();
+        document.body.classList.add("overflow-hidden");
       });
 
-      dialogRef.current?.showModal();
-      document.body.classList.add("overflow-hidden");
     } else {
       document.body.classList.remove("overflow-hidden");
     }
@@ -85,38 +83,36 @@ export function BookFullDetails({ id, onClose, open }: BookFullDetailsProps) {
       className="cursor-default overscroll-none"
     >
       <div className="flex flex-row">
-        {displayData && (
-          <>
-            <div className="flex p-4 md:flex-row flex-col space-x-6">
-              <div className="flex-initial md:basis-2/5">
-                <Image
-                  src={`/book/${id}/cover`}
-                  width={displayData.coverImage.width}
-                  height={displayData.coverImage.height}
-                  alt={displayData.title}
-                  title={displayData.title}
-                  className="border-2 p-2 rounded-md shadow-lg md:min-w-[32rem] min-w-full"
-                />
-              </div>
-              <div className="flex flex-col space-y-3 md:basis-3/5">
-                <div className="text-4xl font-bold">{displayData.title}</div>
-                <div className="text-2xl italic">{displayData.author.join(",")}</div>
-                <div className="text-lg">{displayData.publisher}</div>
-                <BookSubjectBar subjects={displayData.subject} editMode={editMode} onChange={onChangeSubject}/>
-                <div className="flex-grow">{displayData.description}</div>
-                <BookDownloadBar editions={displayData.editions} bookId={id} />
-              </div>
+        <div>
+          {error && (
+            <div className="p-4 space-x-6 border-red-500 border-2 m-2">
+              <p>{error.message}</p>
             </div>
-            <BookFullDetailsMenu editMode={editMode} onClose={handleClose} onStartEditing={startEditMode} onSave={saveEdits} onCancelEditing={undoEdits} />
-          </>
-        )}
-        {error && (
-          <div className="p-4 space-x-6 border-red-500 border-2 m-2">
-            <p>There was an error loading the book.  Please close the dialog and try again</p>
-            <p>{error.message}</p>
-            <p><a href="#" onClick={handleClose}>Close</a></p>
-          </div>
-        )}
+          )}
+          {displayData && (
+              <div className="flex p-4 md:flex-row flex-col space-x-6">
+                <div className="flex-initial md:basis-2/5">
+                  <Image
+                    src={`/book/${id}/cover`}
+                    width={displayData.coverImage.width}
+                    height={displayData.coverImage.height}
+                    alt={displayData.title}
+                    title={displayData.title}
+                    className="border-2 p-2 rounded-md shadow-lg md:min-w-[32rem] min-w-full"
+                  />
+                </div>
+                <div className="flex flex-col space-y-3 md:basis-3/5">
+                  <div className="text-4xl font-bold">{displayData.title}</div>
+                  <div className="text-2xl italic">{displayData.author.join(",")}</div>
+                  <div className="text-lg">{displayData.publisher}</div>
+                  <BookSubjectBar subjects={displayData.subject} editMode={editMode} onChange={onChangeSubject}/>
+                  <div className="flex-grow">{displayData.description}</div>
+                  <BookDownloadBar editions={displayData.editions} bookId={id} />
+                </div>
+              </div>
+          )}
+        </div>
+        <BookFullDetailsMenu editMode={editMode} apiError={error} onClose={handleClose} onStartEditing={startEditMode} onSave={saveEdits} onCancelEditing={undoEdits} />
       </div>
     </dialog>
   );
