@@ -14,8 +14,8 @@ type Data = {
   shelves: ShelfDetail[]
 };
 
-const defeaultData = { books: [], shelves: [] };
-const libraryDb = await JSONFilePreset<Data>(LIBRARY_DB, defeaultData);
+const defaultData = { books: [], shelves: [] };
+const libraryDb = await JSONFilePreset<Data>(LIBRARY_DB, defaultData);
 
 export const getBooksOn = cache(async (id: string): Promise<BookDetails[]> => {
   if (id == CustomShelve.ALL) {
