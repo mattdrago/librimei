@@ -1,14 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Book } from "./Book";
 import { BookDetails } from "./Book/types";
 import { ShelveFilter } from "./Shelve/ShelveFilter";
 
 export function Shelve({ id, books }: { id: string; books: BookDetails[] }) {
   const [booksToDisplay, setBooksToDisplay] = useState(books);
+  const [subjects, setSubjects] = useState<string[]>([]);
 
   function filterBooks(subjects: string[]) {
+    setSubjects(subjects);
     if (subjects.length == 0) {
       setBooksToDisplay(books);
     } else {
@@ -19,6 +21,8 @@ export function Shelve({ id, books }: { id: string; books: BookDetails[] }) {
       );
     }
   }
+
+  useEffect(() => filterBooks(subjects), books);
 
   return (
     <>

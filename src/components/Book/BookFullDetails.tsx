@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from 'next/navigation';
 import Image from "next/image";
 
 import { BookDownloadBar } from "./BookDownloadBar";
@@ -16,6 +17,8 @@ interface BookFullDetailsProps {
 }
 
 export function BookFullDetails({ id, onClose, open }: BookFullDetailsProps) {
+  const router = useRouter();
+
   const dialogRef = useRef<HTMLDialogElement>(null);
   var [editMode, setEditMode] = useState(false);
   var [loadedData, setLoadedData] = useState<BookDetails>();
@@ -37,6 +40,7 @@ export function BookFullDetails({ id, onClose, open }: BookFullDetailsProps) {
       bookAPI.saveBook(displayData).then(() => {
         setLoadedData(displayData);
         setEditMode(false);
+        router.refresh();
       }).catch((e) => {
         setError(e);
       });
