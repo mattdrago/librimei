@@ -1,5 +1,6 @@
 "use client";
 
+import  parse from 'html-react-parser';
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from 'next/navigation';
 import Image from "next/image";
@@ -110,7 +111,7 @@ export function BookFullDetails({ id, onClose, open }: BookFullDetailsProps) {
                   <div className="text-2xl italic">{displayData.author.join(",")}</div>
                   <div className="text-lg">{displayData.publisher}</div>
                   <BookSubjectBar subjects={displayData.subject} editMode={editMode} onChange={onChangeSubject}/>
-                  <div className="flex-grow">{displayData.description}</div>
+                  <div className="flex-grow book-description">{parse(displayData.description ?? "")}</div>
                   <BookDownloadBar editions={displayData.editions} bookId={id} />
                 </div>
               </div>
