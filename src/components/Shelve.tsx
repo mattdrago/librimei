@@ -9,24 +9,26 @@ export function Shelve({ id, books }: { id: string; books: BookDetails[] }) {
   const [booksToDisplay, setBooksToDisplay] = useState(books);
   const [subjects, setSubjects] = useState<string[]>([]);
 
-  function filterBooks(subjects: string[]) {
-    setSubjects(subjects);
-    if (subjects.length == 0) {
-      setBooksToDisplay(books);
-    } else {
-      setBooksToDisplay(
-        books.filter((book) =>
-          subjects.every((subject) => book.subject.includes(subject))
-        )
-      );
+  useEffect(() => {
+    console.log("something changed");
+    function filterBooks() {
+      if (subjects.length == 0) {
+        setBooksToDisplay(books);
+      } else {
+        setBooksToDisplay(
+          books.filter((book) =>
+            subjects.every((subject) => book.subject.includes(subject))
+          )
+        );
+      }
     }
-  }
 
-  useEffect(() => filterBooks(subjects), books);
+    filterBooks();
+  }, [books, subjects]);
 
   return (
     <>
-      <ShelveFilter books={booksToDisplay} onFilter={filterBooks} />
+      <ShelveFilter books={booksToDisplay} onFilter={setSubjects} />
       <div
         id={`shelf_${id}`}
         className="flex flex-wrap justify-start gap-10 p-10"
