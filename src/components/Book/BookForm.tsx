@@ -10,14 +10,14 @@ import { getShelves, getPublishers } from "@/services/BookLoader";
 
 export async function BookForm() {
   const shelveList = await getShelves();
-  const puiblisherList = await getPublishers();
+  const publisherList = await getPublishers();
 
   return (
     <div className=" flex justify-center items-center pt-4">
       <form className="w-[768px]">
         <Title />
         <Author />
-        <Publisher list={puiblisherList} />
+        <Publisher list={publisherList} />
         <PublicationDate />
         <Edition />
         <Cover />
