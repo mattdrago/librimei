@@ -6,17 +6,18 @@ import { Publisher } from "./Form/Publisher";
 import { Shelves } from "./Form/Shelves";
 import { Title } from "./Form/Title";
 
-import { getShelves, getPublishers } from "@/services/BookLoader";
+import { getShelves, getPublishers, getAuthors } from "@/services/BookLoader";
 
 export async function BookForm() {
   const shelveList = await getShelves();
   const publisherList = await getPublishers();
+  const authorList = await getAuthors();
 
   return (
     <div className=" flex justify-center items-center pt-4">
       <form className="w-[768px]">
         <Title />
-        <Author />
+        <Author list={authorList} />
         <Publisher list={publisherList} />
         <PublicationDate />
         <Edition />

@@ -1,41 +1,34 @@
 "use client";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTrash,
-  faCirclePlus,
-  faArrowUp,
-  faArrowDown,
-} from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import { AuthorButton } from "./AuthorButton";
+import CreateableSelect from 'react-select/creatable'
 
-export function Author() {
-  const [authors, setAuthors] = useState([""]);
+import {
+  OnChangeValue
+} from 'react-select';
 
-  const addAuthorAfter = (index: number) => {
-    let newAuthors = [...authors];
-    newAuthors.splice(index + 1, 0, "");
-    setAuthors(newAuthors);
-  };
+interface AuthorOption {
+  label: string,
+  value: string,
+};
 
-  const deleteAuthorAt = (index: number) => {
-    let newAuthors = [...authors];
-    newAuthors.splice(index, 1);
-    setAuthors(newAuthors);
-  };
+const components = {
 
-  const swapAuthor = (from: number, to: number) => {
-    let newAuthors = [...authors];
-    [newAuthors[to], newAuthors[from]] = [newAuthors[from], newAuthors[to]];
-    setAuthors(newAuthors);
-  };
+}
 
-  const updateAuthor = (author: string, index: number) => {
-    let newAuthors = [...authors];
-    newAuthors[index] = author;
-    setAuthors(newAuthors);
-  };
+export function Author({ list }: { list: string[] }) {
+  const [authors, setAuthors] = useState<readonly AuthorOption[]>([]);
+
+  var authorOptions = list.sort()
+    .map(author => ({ label: author, value: author }));
+
+  const onChange = (selectedOptions: OnChangeValue<AuthorOption, true>) => {
+    if (selectedOptions == null) {
+      selectedOptions = [];
+    }
+
+    setAuthors(selectedOptions);
+  }
 
   return (
     <div className="flex">
@@ -43,46 +36,14 @@ export function Author() {
         <label htmlFor="author">Author</label>
       </div>
       <div id="author_container" className="w-5/6">
-        {authors.map((author, index) => (
-          <div key={index} className="flex">
-            <div className="w-4/5">
-              <input
-                type="text"
-                className="border w-full"
-                value={author}
-                placeholder="Author name"
-                onChange={(e) => {
-                  updateAuthor(e.target.value, index);
-                }}
-              />
-            </div>
-            <div className="flex justify-evenly w-1/5">
-              <AuthorButton
-                display={authors.length > 1}
-                title="Delete Author"
-                onClick={() => deleteAuthorAt(index)}
-                icon={faTrash}
-              />
-              <AuthorButton
-                title="Add Another Author"
-                onClick={() => addAuthorAfter(index)}
-                icon={faCirclePlus}
-              />
-              <AuthorButton
-                display={index > 0}
-                title="Move Author Up"
-                onClick={() => swapAuthor(index, index - 1)}
-                icon={faArrowUp}
-              />
-              <AuthorButton
-                display={index < authors.length - 1}
-                title="Move Author Down"
-                onClick={() => swapAuthor(index, index + 1)}
-                icon={faArrowDown}
-              />
-            </div>
-          </div>
-        ))}
+        <CreateableSelect
+          instanceId="author-select"
+          options={authorOptions}
+          isClearable
+          isSearchable
+          isMulti
+          onChange={onChange}
+        />
       </div>
     </div>
   );

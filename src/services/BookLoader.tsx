@@ -55,4 +55,8 @@ export const getPublishers = cache(async(): Promise<string[]> => {
 
 export const getSubjects = cache(async(): Promise<string[]> => {
   return Array.from(new Set(libraryDb.data.books.filter(book => book.subject && book.subject.length > 0).flatMap(book => book.subject))).sort();
-})
+});
+
+export const getAuthors = cache(async(): Promise<string[]> => {
+  return Array.from(new Set(libraryDb.data.books.filter(book => book.author && book.author.length > 0).flatMap(book => book.author))).sort();
+});

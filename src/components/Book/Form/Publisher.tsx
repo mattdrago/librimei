@@ -14,6 +14,7 @@ export function Publisher({ list }: { list: string[] }) {
       </div>
       <div className="w-5/6">
         <CreateableSelect
+          instanceId="publisher-select"
           options={publishers}
           isClearable
           isSearchable
