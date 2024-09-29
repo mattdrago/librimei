@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import CreateableSelect from 'react-select/creatable'
-import { components, ValueContainerProps, MultiValueRemoveProps, MultiValueProps, GroupBase } from 'react-select';
+import { components, ValueContainerProps, MultiValueRemoveProps, MultiValueProps, GroupBase, ActionMeta } from 'react-select';
 import { DndContext, useSensors, useSensor, PointerSensor, KeyboardSensor, closestCenter, DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, useSortable, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -17,14 +17,14 @@ interface AuthorOption {
   value: string,
 };
 
-export function SortableItem(props) {
+export function SortableItem({id, children} : {id:string, children: ReactNode}) {
   const {
     attributes,
     listeners,
     setNodeRef,
     transform,
     transition,
-  } = useSortable({ id: props.id });
+  } = useSortable({ id });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -33,14 +33,14 @@ export function SortableItem(props) {
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      {props.children}
+      {children}
     </div>
   );
 }
 
 const MultiValue = (props: MultiValueProps<AuthorOption, true, GroupBase<AuthorOption>>) => {
   return (
-    <SortableItem key={props.data.id} id={props.data.id}>
+    <SortableItem id={props.data.id}>
       <components.MultiValue {...props} />
     </SortableItem>
   );
@@ -66,18 +66,16 @@ const DroppableValueContainer = ({ children, ...props }: ValueContainerProps<Aut
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
-
+   
     if (active && over && active.id !== over.id) {
-      props.selectProps.onSetValues((authors: AuthorOption[]) => {
-        const oldIndex = authors.findIndex(author => author.id == active.id);
-        const newIndex = authors.findIndex(author => author.id == over.id);
+      var authors = [...props.getValue()];
+      const oldIndex = authors.findIndex(author => author.id == active.id);
+      const newIndex = authors.findIndex(author => author.id == over.id);
 
-        if (oldIndex == -1 || newIndex == -1) {
-          return [... authors];
-        } else {
-          return arrayMove(authors, oldIndex, newIndex);
-        }
-      });
+      if (oldIndex != -1 && newIndex != -1) {
+        var newAuthors = arrayMove([...authors], oldIndex, newIndex);
+        props.selectProps.onChange(newAuthors, {action: 'select-option', option: authors[oldIndex]});
+      }
     }
   }
 
@@ -87,7 +85,7 @@ const DroppableValueContainer = ({ children, ...props }: ValueContainerProps<Aut
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
     >
-      <SortableContext items={props.selectProps.value.map(option => option.id)}>
+      <SortableContext items={props.getValue().map(option => option.id)}>
         <components.ValueContainer {...props}>{children}</components.ValueContainer>
       </SortableContext>
     </DndContext>
@@ -100,7 +98,7 @@ export function Author({ list }: { list: string[] }) {
   var authorOptions = list.sort()
     .map((author, index) => ({ id: `${index}`, label: author, value: author }));
 
-  const handleOnChange = (selectedOptions: OnChangeValue<AuthorOption, true>) => {
+  const handleOnChange = (selectedOptions: OnChangeValue<AuthorOption, true>, actionMeta : ActionMeta<AuthorOption>) => {
     if (selectedOptions == null) {
       selectedOptions = [];
     }
@@ -128,7 +126,6 @@ export function Author({ list }: { list: string[] }) {
           isSearchable
           isMulti
           onChange={handleOnChange}
-          onSetValues={setAuthors}
           value={authors}
         />
       </div>
