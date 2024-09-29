@@ -3,7 +3,7 @@
 import { useState } from "react";
 import CreateableSelect from 'react-select/creatable'
 import { components, MultiValueGenericProps, ValueContainerProps, MultiValueRemoveProps } from 'react-select';
-import { DndContext, useSensors, useSensor, PointerSensor, KeyboardSensor, closestCenter } from '@dnd-kit/core';
+import { DndContext, useSensors, useSensor, PointerSensor, KeyboardSensor, closestCenter, DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, useSortable, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
@@ -57,31 +57,28 @@ function SingleValue(props) {
 }
 
 const MultiValueRemove = (props: MultiValueRemoveProps<AuthorOption>) => {
-  const handleOnMouseDown = (e) => {
-    setItems((items) => {
-      var newItems = items.filter(item => item.id != props.data.id);
-      return newItems;
+  const handleOnMouseDown = (e : React.MouseEvent<HTMLDivElement>) => {
+
+    props.selectProps.onSetValues((authors : AuthorOption[]) => {
+      var newAuthors = authors.filter(author => author.id != props.data.id);
+
+      return newAuthors;
     })
 
-    e.preventDefault()
-    e.stopPropagation()
+    e.preventDefault();
+    e.stopPropagation();
   }
 
   return (
-      <>
-        <components.MultiValueRemove {...props}>
-          <div onMouseDown={handleOnMouseDown}>X</div>
-        </components.MultiValueRemove>
-      </>
+    <>
+      <components.MultiValueRemove {...props}>
+        <div onMouseDown={handleOnMouseDown}>X</div>
+      </components.MultiValueRemove>
+    </>
   );
 };
 
-var setItems = null;
-
-const DroppableValueContainer = ({
-  children,
-  ...props
-}: ValueContainerProps<AuthorOption>) => {
+const DroppableValueContainer = ({ children, ...props }: ValueContainerProps<AuthorOption>) => {
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -90,15 +87,15 @@ const DroppableValueContainer = ({
     })
   );
 
-  function handleDragEnd(event) {
-    const {active, over} = event;
-    
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+
     if (active && over && active.id !== over.id) {
-      setItems((items) => {
-        const oldIndex = items.findIndex(item => item.id == active.id);
-        const newIndex = items.findIndex(item => item.id == over.id);
-        
-        var result = arrayMove(items, oldIndex, newIndex);
+      props.selectProps.onSetValues((authors: AuthorOption[]) => {
+        const oldIndex = authors.findIndex(author => author.id == active.id);
+        const newIndex = authors.findIndex(author => author.id == over.id);
+
+        var result = arrayMove(authors, oldIndex, newIndex);
         return result;
       });
     }
@@ -110,7 +107,7 @@ const DroppableValueContainer = ({
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
     >
-      <SortableContext items={props.options.map(option => option.id)}>
+      <SortableContext items={props.selectProps.value.map(option => option.id)}>
         <components.ValueContainer {...props}>{children}</components.ValueContainer>
       </SortableContext>
     </DndContext>
@@ -118,32 +115,26 @@ const DroppableValueContainer = ({
 }
 
 export function Author({ list }: { list: string[] }) {
-  const [authors, setAuthors] = useState<readonly AuthorOption[]>([]);
-  const [authorOptions, setAuthorOptions] = useState<AuthorOption[]>(
-    list.sort().map((author, index) => ({ id: `${index}`, label: author, value: author }))
-  );
+  const [authors, setAuthors] = useState<AuthorOption[]>([]);
 
-  setItems = setAuthors;
+  var authorOptions = list.sort()
+    .map((author, index) => ({ id: `${index}`, label: author, value: author }));
 
-  const onChange = (selectedOptions: OnChangeValue<AuthorOption, true>) => {
-    if (selectedOptions == null) {
-      selectedOptions = [];
+    const handleOnChange = (selectedOptions: OnChangeValue<AuthorOption, true>) => {
+      if (selectedOptions == null) {
+        selectedOptions = [];
+      }
+  
+      selectedOptions.forEach(option => {
+        if (option.id == null) {
+          option.id = "" + Math.random().toString(36).substring(2, 9);
+        }
+      })
+  
+      setAuthors([...selectedOptions]);
     }
 
-    selectedOptions.forEach(option => {
-      if(option.id == null) {
-        console.log("OPTION HAS NO ID");
-        option.id = "" + Math.random().toString(36).substring(2,9);
-
-        setAuthorOptions([...authorOptions, option]);
-
-      }
-    })
-
-    setAuthors(selectedOptions);
-  }
-
-  return (
+    return (
     <div className="flex">
       <div className="w-1/6">
         <label htmlFor="author">Author</label>
@@ -156,7 +147,8 @@ export function Author({ list }: { list: string[] }) {
           isClearable
           isSearchable
           isMulti
-          onChange={onChange}
+          onChange={handleOnChange}
+          onSetValues={setAuthors}
           value={authors}
         />
       </div>
