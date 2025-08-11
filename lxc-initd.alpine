@@ -1,0 +1,16 @@
+#!/sbin/openrc-run
+
+description="Libri Mei - My Books Server"
+
+command="/usr/bin/node"
+command_args="--env-file .env server.js"
+command_background=true
+
+directory="/libri-mei"
+
+pidfile="/run/${RC_SVCNAME}/pid"
+
+depend() {
+        need net
+        after firewall
+}
