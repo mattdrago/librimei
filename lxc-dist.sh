@@ -18,7 +18,6 @@ echo "HOSTNAME='0.0.0.0'" >> "${APP_DIR}/.env"
 echo "LIBRARY_FOLDER=/elibrary" >> "${APP_DIR}/.env"
 
 cp ./lxc-initd.alpine /etc/init.d/libri-mei
-mkdir -p /run/libri-mei
 
 rc-update add libri-mei
 rc-service libri-mei stop

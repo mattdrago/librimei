@@ -8,7 +8,7 @@ command_background=true
 
 directory="/libri-mei"
 
-pidfile="/run/${RC_SVCNAME}/pid"
+pidfile="/run/${RC_SVCNAME}.pid"
 
 depend() {
         need net
