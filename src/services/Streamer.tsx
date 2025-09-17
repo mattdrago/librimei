@@ -1,14 +1,12 @@
-import { ReadableOptions } from "stream";
-
-const path = require("path");
-const fs = require("fs");
+import path from "path";
+import fs from "fs";
 
 import { LIBRARY_PATH } from "@/services/environment";
 
 export interface Streamer {
   data: ReadableStream<Uint8Array>;
   contentType: string;
-  contentSize: string;
+  contentSize: number;
 }
 
 function createReadableStream(

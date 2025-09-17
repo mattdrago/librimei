@@ -18,7 +18,7 @@ export async function GET(request: Request, { params }: BookRequest): Promise<Ne
         status: 200,
         headers: new Headers({
             'content-type': `application/${streamer.contentType}`,
-            'content-length': streamer.contentSize,
+            'content-length': String(streamer.contentSize),
         }),
     });
 

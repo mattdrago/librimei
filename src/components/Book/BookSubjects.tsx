@@ -4,10 +4,10 @@ import useSWR, { Fetcher } from "swr";
 
 export function BookSubjectBar({subjects, editMode, onChange} : {subjects : string[], editMode : boolean, onChange : (subjects : string[]) => void}) {
       
-    var id = useId();
+    const id = useId();
 
     const fetcher: Fetcher<string[]> = (path: string) => fetch(path).then((res) => res.json());
-    const { data, error, isLoading } = useSWR('/subjects', fetcher);
+    const { data, isLoading } = useSWR('/subjects', fetcher);
     const allSubjects = data && !isLoading ? data.map((subject) => {
           return { value: subject, label: subject };
         }) : [];

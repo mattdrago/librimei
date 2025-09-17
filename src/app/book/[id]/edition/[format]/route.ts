@@ -28,7 +28,7 @@ export async function GET(request: Request, { params: { id, format } }: BookEdit
                 status: 200,
                 headers: new Headers({
                     'content-type': `${mime.lookup(format)}`,
-                    'content-length': streamer.contentSize,
+                    'content-length': String(streamer.contentSize),
                     'content-disposition': `attachement; filename="${filename}"`,
                 }),
             });

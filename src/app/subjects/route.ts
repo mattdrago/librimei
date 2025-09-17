@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { getSubjects } from "@/services/BookLoader";
 
-export async function GET(request: Request): Promise<NextResponse> {
+export async function GET(): Promise<NextResponse> {
 
     const subjects = await getSubjects();
 

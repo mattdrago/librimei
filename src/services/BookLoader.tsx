@@ -37,7 +37,7 @@ export const getBook = cache(async(id: string) : Promise<BookDetails | null> => 
 
 export const updateBook = cache(async(book: BookDetails) : Promise<void> => {
   libraryDb.update((data : Data) => {
-    var bookIndex = data.books.findIndex(curBook => curBook.id == book.id);
+    const bookIndex = data.books.findIndex(curBook => curBook.id == book.id);
 
     if(bookIndex != -1) {
       data.books[bookIndex] = book;

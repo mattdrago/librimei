@@ -13,7 +13,7 @@ import { BookAPIError, bookAPI } from "@/services/BookAPI";
 
 interface BookFullDetailsProps {
   id: string;
-  onClose: Function;
+  onClose: VoidFunction;
   open: boolean;
 }
 
@@ -21,10 +21,10 @@ export function BookFullDetails({ id, onClose, open }: BookFullDetailsProps) {
   const router = useRouter();
 
   const dialogRef = useRef<HTMLDialogElement>(null);
-  var [editMode, setEditMode] = useState(false);
-  var [loadedData, setLoadedData] = useState<BookDetails>();
-  var [displayData, setDisplayData] = useState<BookDetails>();
-  var [error, setError] = useState<BookAPIError>();
+  const [editMode, setEditMode] = useState(false);
+  const [loadedData, setLoadedData] = useState<BookDetails>();
+  const [displayData, setDisplayData] = useState<BookDetails>();
+  const [error, setError] = useState<BookAPIError>();
   
   const handleClose = () => {
     undoEdits();

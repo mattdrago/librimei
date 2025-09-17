@@ -22,7 +22,7 @@ export async function GET(request: Request, { params: { id } }: BookCoverRequest
             status: 200,
             headers: new Headers({
                 'content-type': `image/${streamer.contentType}`,
-                'content-length': streamer.contentSize,
+                'content-length': String(streamer.contentSize),
             }),
         });
     } else {

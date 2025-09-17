@@ -26,7 +26,7 @@ class BookNotFoundError extends BookAPIError {
 }
 
 async function loadBook(id: string): Promise<BookDetails> {
-  var response = await fetch(`/book/${id}`);
+  const response = await fetch(`/book/${id}`);
 
   if (response.ok) {
     return await response.json();
@@ -42,7 +42,7 @@ async function loadBook(id: string): Promise<BookDetails> {
 }
 
 async function saveBook(book: BookDetails) {
-  var response = await fetch(`/book/${book.id}`, {
+  const response = await fetch(`/book/${book.id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(book),
@@ -57,7 +57,7 @@ async function saveBook(book: BookDetails) {
   }
 }
 
-export var bookAPI = {
+export const bookAPI = {
   loadBook: loadBook,
   saveBook: saveBook,
 };

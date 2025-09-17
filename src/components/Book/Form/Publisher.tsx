@@ -4,7 +4,7 @@ import CreateableSelect from "react-select/creatable";
 
 export function Publisher({ list }: { list: string[] }) {
 
-  var publishers = list.sort()
+  const publishers = list.sort()
     .map(publisher => ({label: publisher, value: publisher}));
 
   return (

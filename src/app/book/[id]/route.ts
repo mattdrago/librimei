@@ -29,7 +29,7 @@ export async function PATCH(request: Request, { params: { id } } : BookRequest )
     const book = await getBook(id);
 
     if(book) {
-        var bookChanges = await request.json();
+        const bookChanges = await request.json();
 
         book.subject = bookChanges.subject;
         await updateBook(book);

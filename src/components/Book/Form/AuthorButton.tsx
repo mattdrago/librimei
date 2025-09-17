@@ -1,10 +1,11 @@
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { MouseEventHandler } from "react";
 
 interface AuthorButtonProps {
   display?: boolean;
   title: string;
-  onClick: any;
+  onClick: MouseEventHandler<HTMLButtonElement>;
   icon: IconDefinition;
 }
 

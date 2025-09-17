@@ -11,10 +11,10 @@ import { BookAPIError, BookAPIOperationType } from "@/services/BookAPI";
 interface BookFullDetailsMenuProps {
   editMode: boolean;
   apiError: BookAPIError | undefined;
-  onClose: Function;
-  onStartEditing: Function;
-  onSave: Function;
-  onCancelEditing: Function;
+  onClose: VoidFunction;
+  onStartEditing: VoidFunction;
+  onSave: VoidFunction;
+  onCancelEditing: VoidFunction;
 }
 
 export function BookFullDetailsMenu({editMode, apiError, onClose, onStartEditing, onSave, onCancelEditing} : BookFullDetailsMenuProps) {

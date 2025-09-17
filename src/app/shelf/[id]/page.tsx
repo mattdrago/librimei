@@ -1,5 +1,5 @@
 import { Shelve } from "@/components/Shelve";
-import { ShelveBar, CustomShelve } from "@/components/ShelveBar";
+import { ShelveBar } from "@/components/ShelveBar";
 import { getBooksOn } from "@/services/BookLoader";
 
 export default async function Shelf({ params }: { params: { id: string } }) {

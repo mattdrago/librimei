@@ -2,7 +2,7 @@
 
 import { ReactNode, useState } from "react";
 import CreateableSelect from 'react-select/creatable'
-import { components, ValueContainerProps, MultiValueRemoveProps, MultiValueProps, GroupBase, ActionMeta } from 'react-select';
+import { components, ValueContainerProps, MultiValueRemoveProps, MultiValueProps, GroupBase} from 'react-select';
 import { DndContext, useSensors, useSensor, PointerSensor, KeyboardSensor, closestCenter, DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, useSortable, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -68,12 +68,12 @@ const DroppableValueContainer = ({ children, ...props }: ValueContainerProps<Aut
     const { active, over } = event;
    
     if (active && over && active.id !== over.id) {
-      var authors = [...props.getValue()];
+      const authors = [...props.getValue()];
       const oldIndex = authors.findIndex(author => author.id == active.id);
       const newIndex = authors.findIndex(author => author.id == over.id);
 
       if (oldIndex != -1 && newIndex != -1) {
-        var newAuthors = arrayMove([...authors], oldIndex, newIndex);
+        const newAuthors = arrayMove([...authors], oldIndex, newIndex);
         props.selectProps.onChange(newAuthors, {action: 'select-option', option: authors[oldIndex]});
       }
     }
@@ -95,10 +95,10 @@ const DroppableValueContainer = ({ children, ...props }: ValueContainerProps<Aut
 export function Author({ list }: { list: string[] }) {
   const [authors, setAuthors] = useState<AuthorOption[]>([]);
 
-  var authorOptions = list.sort()
+  const authorOptions = list.sort()
     .map((author, index) => ({ id: `${index}`, label: author, value: author }));
 
-  const handleOnChange = (selectedOptions: OnChangeValue<AuthorOption, true>, actionMeta : ActionMeta<AuthorOption>) => {
+  const handleOnChange = (selectedOptions: OnChangeValue<AuthorOption, true>) => {
     if (selectedOptions == null) {
       selectedOptions = [];
     }
@@ -109,7 +109,7 @@ export function Author({ list }: { list: string[] }) {
       }
     })
 
-    setAuthors(_authors => [...selectedOptions]);
+    setAuthors(() => [...selectedOptions]);
   }
 
   return (
