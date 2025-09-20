@@ -2,18 +2,20 @@ import { NextResponse } from 'next/server';
 
 import { streamFile } from '@/services/Streamer'
 
-interface BookRequestParams {
+type BookRequestParams = Promise <{
     path: string[];
-}
+}>
 
 interface BookRequest {
     params: BookRequestParams
 }
 
 
-export async function GET(request: Request, { params }: BookRequest): Promise<NextResponse> {
+export async function GET(request: Request, segmentData: BookRequest): Promise<NextResponse> {
 
+    const params = await segmentData.params;
     const streamer = await streamFile(params.path);
+    
     const res = new NextResponse(streamer.data, {
         status: 200,
         headers: new Headers({

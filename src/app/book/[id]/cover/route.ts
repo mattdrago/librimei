@@ -3,18 +3,18 @@ import { NextResponse } from 'next/server';
 import { streamFile } from '@/services/Streamer'
 import { getBook } from '@/services/BookLoader';
 
+type BookCoverRequestParams = Promise<{
+    id: string;
+}>
 
 interface BookCoverRequest {
-    id: string;
+    params: BookCoverRequestParams;
 }
 
-interface BookCoverRequestParams {
-    params: BookCoverRequest;
-}
+export async function GET(request: Request, context: BookCoverRequest): Promise<NextResponse> {
 
-export async function GET(request: Request, { params: { id } }: BookCoverRequestParams): Promise<NextResponse> {
-
-    const book = await getBook(id);
+    const params = await context.params
+    const book = await getBook(params.id);
 
     if(book) {
         const streamer = await streamFile([book.coverImage.imageSrc]);
@@ -26,7 +26,7 @@ export async function GET(request: Request, { params: { id } }: BookCoverRequest
             }),
         });
     } else {
-        return NextResponse.json({error: {message: `Book not fouond`, id: id}}, {
+        return NextResponse.json({error: {message: `Book not fouond`, id: params.id}}, {
             status: 404,
         });        
     }
