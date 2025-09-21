@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "cp ./node_modules/pdfjs-dist/build/* ./public/pdfjs",
     "dev": "next dev",
+    "prebuild": "cp ./node_modules/pdfjs-dist/build/* ./public/pdfjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -22,6 +24,7 @@
     "lowdb": "^7.0.1",
     "mime-types": "^2.1.35",
     "next": "^15.5.3",
+    "pdfjs-dist": "^5.4.149",
     "postcss": "8.4.35",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
