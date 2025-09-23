@@ -2470,6 +2470,11 @@ isarray@^2.0.5:
   resolved "https://registry.yarnpkg.com/isarray/-/isarray-2.0.5.tgz#8af1e4c1221244cc62459faf38940d4e644a5723"
   integrity sha512-xHjhDr3cNBK0BzdUJSPXZntQUx/mwMS5Rw4A7lPJ90XGAO6ISP/ePDNuo0vhqOZU+UD5JoodwCAAoZQd3FeAKw==
 
+isbn3@^1.2.14:
+  version "1.2.14"
+  resolved "https://registry.yarnpkg.com/isbn3/-/isbn3-1.2.14.tgz#0233b20f140ff20aec920833a301dbeee91fd75f"
+  integrity sha512-srdjaG6unydu4wMC9hCj2SWi8/LXep/kZfh1WOTNrXY2ZfpRmGTWw05+8fVRQ0I5aCB1+qOrJF06QShD8EMTEg==
+
 isexe@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
