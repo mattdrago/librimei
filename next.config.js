@@ -3,7 +3,7 @@ const nextConfig = {
     output: "standalone",
     webpack: (config, options) => {
         config.resolve.fallback = {
-            'fs': require.resolve('./src/components/Book/Form/fs.js'),
+            'fs': require.resolve('./src/utils/fs.js'),
         }
 
         return config
