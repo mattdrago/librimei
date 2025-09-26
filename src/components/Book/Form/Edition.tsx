@@ -1,7 +1,8 @@
 "use client";
 
-import { ChangeEvent, useEffect, useState } from "react";
-import ISBN from "isbn3"
+import { ChangeEvent } from "react";
+import ISBN from "isbn3";
+import EPub from "epub";
 
 export function Edition() {
 
@@ -19,7 +20,7 @@ export function Edition() {
 
   return (
     <div className="flex">
-      <script src="/pdfjs/pdf.mjs" type="module" />
+      <script src="/pdfjs/pdf.mjs" type="module" async/>
       <div className="w-1/6">
         <label htmlFor="edition">Edition</label>
       </div>
@@ -31,7 +32,7 @@ export function Edition() {
           placeholder="Edition"
           className="border w-full"
           onChange={fileChanged}
-          accept="application/pdf"
+          accept="application/pdf,application/epub+zip"
         />
       </div>
     </div>
@@ -44,6 +45,37 @@ async function extractIsbn(fileContent: string | ArrayBuffer | null, contentType
     return null;
   }
 
+  switch (contentType) {
+    case 'application/pdf':
+      return extractIsbnFromPdf(fileContent);
+
+    case 'application/epub+zip':
+      return extractIsbnFromEpub(fileContent);
+  
+    default:
+      return null;
+  }
+}
+
+async function extractIsbnFromEpub(fileContent: string | ArrayBuffer): Promise<string | null> {
+
+  const buf = (typeof fileContent == "string") ? Buffer.from(fileContent) : Buffer.from(fileContent);
+  // @ts-expect-error EPub pass the filename to the adm-zip which can handle filename being a Buffer
+  const epub = new EPub(buf, '', '');
+
+  const promise = new Promise<string | null>((resolve, reject) => {
+    // ISBN is not in the metadata as a standard.  Need to do the content extract approach like pdf.
+    epub.on('end', () => resolve(epub.metadata.title));
+    epub.on('error', () => reject("Error loading epub"));
+  });
+  
+  epub.parse();
+
+  return promise;
+}
+
+async function extractIsbnFromPdf(fileContent: string | ArrayBuffer): Promise<string | null> {
+
   const pages = getPdfPages(fileContent);
   const foundIsbnCounts: Map<string, number> = new Map<string, number>();
 
@@ -55,7 +87,7 @@ async function extractIsbn(fileContent: string | ArrayBuffer | null, contentType
       isbnMatch.forEach(str => {
         const isbn = ISBN.asIsbn13(str);
         if (isbn) {
-          let count = foundIsbnCounts.get(isbn) ?? 0;
+          const count = foundIsbnCounts.get(isbn) ?? 0;
           foundIsbnCounts.set(isbn, count + 1);
         }
       })
@@ -66,6 +98,7 @@ async function extractIsbn(fileContent: string | ArrayBuffer | null, contentType
 }
 
 async function* getPdfPages(content: string | ArrayBuffer ) : AsyncGenerator<string, string, string> {
+  // @ts-expect-error pdfjsLib is added to window with the <script> tag
   const pdfjs = window.pdfjsLib as typeof import('pdfjs-dist/types/src/pdf');
   pdfjs.GlobalWorkerOptions.workerSrc = '/pdfjs/pdf.worker.min.mjs';
 
@@ -75,7 +108,7 @@ async function* getPdfPages(content: string | ArrayBuffer ) : AsyncGenerator<str
     const page = await pdfDocument.getPage(pageNum);
     const pageContent = await page.getTextContent();
 
-    let fullPageContent = pageContent.items.map(contentItem => {
+    const fullPageContent = pageContent.items.map(contentItem => {
       if ('str' in contentItem) {
         return contentItem.str;
       }
