@@ -14,36 +14,33 @@ export async function extractIsbn(fileContent: string | ArrayBuffer | null, cont
 
   switch (contentType) {
     case 'application/pdf':
-      return extractIsbnFrom(getPdfText(fileContent));
+      return extractFirstIsbnFrom(getPdfText(fileContent));
 
     case 'application/epub+zip':
-      return extractIsbnFrom(getEpubText(fileContent));
+      return extractFirstIsbnFrom(getEpubText(fileContent));
   
     default:
       return null;
   }
 }
 
-async function extractIsbnFrom(contentGenerator: AsyncGenerator<string, string, string>): Promise<string | null> {
-
-  const foundIsbnCounts: Map<string, number> = new Map<string, number>();
+async function extractFirstIsbnFrom(contentGenerator: AsyncGenerator<string, string, string>): Promise<string | null> {
 
   let content : IteratorResult<string, string>;
   for(let contentCount = 0; (content = await contentGenerator.next()) && contentCount < 10; ++contentCount) {
-    const isbnMatch = content.value.match(/((978[-– ])?[0-9][0-9-– ]{10}[-– ][0-9xX])|((978)?[0-9]{9}[0-9Xx])/);
+    const isbnMatch = content.value.match(/((978[-– ])?[0-9][0-9-– ]{10}[-– ][0-9xX])|((978)?[0-9]{9}[0-9Xx])/g);
 
     if (isbnMatch) {
-      isbnMatch.forEach(str => {
-        const isbn = ISBN.asIsbn13(str);
+      for(let i=0; i < isbnMatch.length; ++i) {
+        const isbn = ISBN.asIsbn13(isbnMatch[i].toString());
         if (isbn) {
-          const count = foundIsbnCounts.get(isbn) ?? 0;
-          foundIsbnCounts.set(isbn, count + 1);
+          return isbn
         }
-      })
+      }
     }
   }
 
-  return getMostFrequentIsbn(foundIsbnCounts);
+  return null;
 }
 
 async function* getEpubText(content: string | ArrayBuffer ) : AsyncGenerator<string, string, string> {
@@ -102,17 +99,4 @@ async function* getPdfText(content: string | ArrayBuffer ) : AsyncGenerator<stri
   }
 
   return '';
-}
-
-function getMostFrequentIsbn(isbnCounts : Map<string, number>) : string | null {
-  let isbn = null
-  let isbnCount = 0;
-  isbnCounts.forEach((currIsbnCount, currIsbn) => {
-    if (currIsbnCount > isbnCount) {
-      isbn = currIsbn;
-      isbnCount = currIsbnCount;
-    }
-  });
-
-  return isbn;
 }
