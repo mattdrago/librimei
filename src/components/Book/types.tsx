@@ -19,10 +19,13 @@ export interface BookEdition {
 
 export interface BookDetails {
   id: string;
+  isbn: string;
+  google_id?: string;
   title: string;
   author: string[];
   description?: string;
   publisher?: string;
+  publication_date?: string;
   coverImage: BookCover;
   editions: BookEdition[];
   subject: string[];

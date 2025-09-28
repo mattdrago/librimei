@@ -3,7 +3,11 @@
 import { ChangeEvent } from "react";
 import { extractIsbn } from "@/utils/isbn-extractor";
 
-export function Edition() {
+interface EditionProps {
+  onBookSelected: {(isbn: string|null): void}
+} 
+
+export function Edition({onBookSelected} : EditionProps) {
 
   function fileChanged(e: ChangeEvent<HTMLInputElement>) {
     if (!e.target.files || e.target.files.length == 0) {
@@ -12,7 +16,7 @@ export function Edition() {
     const file = e.target.files[0];
 
     const r = new FileReader();
-    r.onload = async () => { const isbn = await extractIsbn(r.result, file.type); console.log(isbn); };
+    r.onload = async () => { const isbn = await extractIsbn(r.result, file.type); onBookSelected(isbn); };
     r.onerror = () => { console.log("Error reading file") };
     r.readAsArrayBuffer(file);
   }
