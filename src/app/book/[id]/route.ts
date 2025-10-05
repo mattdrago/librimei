@@ -20,7 +20,7 @@ export async function GET(request: Request, context : BookRequest ): Promise<Nex
             status: 200,
         });
     } else {
-        return NextResponse.json({error: {message: `Book not fouond`, id: params.id}}, {
+        return NextResponse.json({error: {message: `Book not found`, id: params.id}}, {
             status: 404,
         });
     }
