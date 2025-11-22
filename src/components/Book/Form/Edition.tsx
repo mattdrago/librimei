@@ -1,10 +1,9 @@
 "use client";
 
 import { ChangeEvent } from "react";
-import { extractIsbn } from "@/utils/isbn-extractor";
 
 interface EditionProps {
-  onBookSelected: {(isbn: string|null): void}
+  onBookSelected: {(file: File): void}
 } 
 
 export function Edition({onBookSelected} : EditionProps) {
@@ -15,15 +14,11 @@ export function Edition({onBookSelected} : EditionProps) {
     }
     const file = e.target.files[0];
 
-    const r = new FileReader();
-    r.onload = async () => { const isbn = await extractIsbn(r.result, file.type); onBookSelected(isbn); };
-    r.onerror = () => { console.log("Error reading file") };
-    r.readAsArrayBuffer(file);
+    onBookSelected(file);
   }
 
   return (
     <div className="flex">
-      <script src="/pdfjs/pdf.mjs" type="module" async/>
       <div className="w-1/6">
         <label htmlFor="edition">Edition</label>
       </div>

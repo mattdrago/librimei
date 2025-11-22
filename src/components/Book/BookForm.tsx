@@ -4,15 +4,31 @@ import  parse from 'html-react-parser';
 import { Edition } from "./Form/Edition";
 import { googleBookApi } from "@/services/GoogleBookAPI";
 import { BookDetails } from "@/components/Book/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { extractIsbn } from "@/utils/isbn-extractor";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
 export function BookForm() {
   const [displayData, setDisplayData] = useState<BookDetails|null>(null);
-  const [loading, setLoading] = useState<Boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [bookFileContent, setBookFileContent] = useState<string | ArrayBuffer | null>(null);
+  const [bookFileType, setBookFileType] = useState<string>('');
 
-  function handleBookSelected(isbn: string | null): void {
+  function handleBookSelected(file: File): void {
+    const r = new FileReader();
+    r.onload = async () => {
+      setBookFileContent(r.result);
+      setBookFileType(file.type);
+    };
+    r.onerror = () => { console.log("Error reading file") };
+    r.readAsArrayBuffer(file);
+  }
+
+  useEffect(() => { searchForBook() }, [bookFileContent]);
+
+  async function searchForBook() {
+    const isbn = await extractIsbn(bookFileContent, bookFileType);
     if (isbn) {
       setLoading(true);
       setDisplayData(null);
@@ -27,6 +43,7 @@ export function BookForm() {
 
   return (
     <div className=" flex justify-center items-center pt-4">
+      <script src="/pdfjs/pdf.mjs" type="module" async/>
       <form className="w-[768px]">
         <Edition onBookSelected={handleBookSelected} />
         <div>
