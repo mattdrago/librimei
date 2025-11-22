@@ -1,16 +1,10 @@
 import ISBN from "isbn3";
 import EPub from "epub";
 
-interface ContentGenerator {
-  (content: string | ArrayBuffer ) : AsyncGenerator<string, string, string>,
-}
-
 export async function extractIsbn(fileContent: string | ArrayBuffer | null, contentType: string): Promise<string | null> {
   if (fileContent == null) {
     return null;
   }
-
-  let contentFunction: ContentGenerator;
 
   switch (contentType) {
     case 'application/pdf':
@@ -73,7 +67,6 @@ async function* getEpubText(content: string | ArrayBuffer ) : AsyncGenerator<str
 
   return '';
 }
-
 
 async function* getPdfText(content: string | ArrayBuffer ) : AsyncGenerator<string, string, string> {
   // @ts-expect-error pdfjsLib is added to window with the <script> tag

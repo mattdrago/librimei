@@ -13,7 +13,6 @@ export async function searchIsbn(isbn: string | null): Promise<BookDetails | nul
         return null;
     }
 
-    const start = Date.now();
     const params = new URLSearchParams();
     params.append('q', `isbn:${isbn}`);
     params.append('key', GOOGLE_CLIENT_KEY);
@@ -22,7 +21,6 @@ export async function searchIsbn(isbn: string | null): Promise<BookDetails | nul
 
     if (response.ok) {
         const data = await response.json();
-        console.log("Time to get response from Google Search: " + (Date.now() - start));
         const book = await getBook(data.items[0].id);
         if (book) {
             book.isbn = isbn;
@@ -38,7 +36,6 @@ async function getBook(googleId: string): Promise<BookDetails | null> {
         return null;
     }
 
-    const start = Date.now();
     const params = new URLSearchParams();
     params.append('key', GOOGLE_CLIENT_KEY);
     params.append('projection', 'full');
@@ -47,8 +44,6 @@ async function getBook(googleId: string): Promise<BookDetails | null> {
 
     if (response.ok) {
         const data = await response.json();
-        console.log("Time to get response from Google Lookup: " + (Date.now() - start));
-
         return googleBookToBook(data);
     }
 
