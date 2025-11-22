@@ -57,7 +57,7 @@ function googleBookToBook(googleData: any): BookDetails {
     const imageName = imageNames.filter((name: string) => name in googleData.volumeInfo.imageLinks).pop() ?? 'thumbnail';
 
     const book: BookDetails = {
-        id: crypto.randomUUID(),
+        id: '',
         isbn: '',
         google_id: googleData.id,
         title: googleData.volumeInfo.title,
