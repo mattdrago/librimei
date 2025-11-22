@@ -28,8 +28,7 @@ async function extractFirstIsbnFrom(contentGenerator: AsyncGenerator<string, str
 
   let content : IteratorResult<string, string>;
   for(let contentCount = 0; (content = await contentGenerator.next()) && contentCount < 10; ++contentCount) {
-    const isbnMatch = content.value.match(/((978[-– ])?[0-9][0-9-– ]{10}[-– ][0-9xX])|((978)?[0-9]{9}[0-9Xx])/g);
-
+    const isbnMatch = content.value.match(/((?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}|97[89][0-9]{10}|(?=(?:[0-9]+[- ]){4})[- 0-9]{17})(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X])/g);
     if (isbnMatch) {
       for(let i=0; i < isbnMatch.length; ++i) {
         const isbn = ISBN.asIsbn13(isbnMatch[i].toString());
