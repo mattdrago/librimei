@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
     output: "standalone",
     webpack: (config, options) => {
@@ -8,6 +9,11 @@ const nextConfig = {
 
         return config
     },
+    experimental: {
+        serverActions: {
+            bodySizeLimit: '750mb',
+        }
+    }
 }
 
 module.exports = nextConfig

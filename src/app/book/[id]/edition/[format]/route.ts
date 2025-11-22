@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import { streamFile } from '@/services/Streamer'
-import { getBook } from '@/services/BookLoader';
+import { getBook } from '@/repository/Library';
 
 import mime from 'mime-types';
 

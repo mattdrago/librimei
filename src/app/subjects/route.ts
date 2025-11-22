@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { getSubjects } from "@/services/BookLoader";
+import { getSubjects } from "@/repository/Library";
 
 export async function GET(): Promise<NextResponse> {
 

@@ -1,6 +1,6 @@
 import { Shelve } from "@/components/Shelve";
 import { ShelveBar, CustomShelve } from "@/components/ShelveBar";
-import { getBooksOn } from "@/services/BookLoader";
+import { getBooksOn } from "@/repository/Library";
 
 export const dynamic = 'force-dynamic';
 

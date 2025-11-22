@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { getBook, updateBook } from "@/services/BookLoader";
+import { getBook, updateBook } from "@/repository/Library";
 
 type BookRequestParams = Promise<{
     id: string;

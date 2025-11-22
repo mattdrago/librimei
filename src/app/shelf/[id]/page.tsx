@@ -1,6 +1,6 @@
 import { Shelve } from "@/components/Shelve";
 import { ShelveBar } from "@/components/ShelveBar";
-import { getBooksOn } from "@/services/BookLoader";
+import { getBooksOn } from "@/repository/Library";
 
 type ShelfParams = Promise<{
   id: string

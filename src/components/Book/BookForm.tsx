@@ -6,6 +6,7 @@ import { CoverSelector } from "./Form/CoverSelector";
 import { googleBookApi } from "@/services/GoogleBookAPI";
 import { BookDetails } from "@/components/Book/types";
 import { useEffect, useState } from "react";
+import { saveBook } from '@/repository/Library';
 import { extractIsbn } from "@/utils/isbn-extractor";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
@@ -43,6 +44,14 @@ export function BookForm() {
     }
   }
 
+  function handleSave(formData: FormData) {
+    if(displayData && coverData) {
+      
+      formData.append('coverData', coverData);
+      saveBook(displayData, formData);
+    }
+  }
+
   function handleCoverSelected(coverData: Blob) {
     setCoverData(coverData);
   }
@@ -50,8 +59,11 @@ export function BookForm() {
   return (
     <div className=" flex justify-center items-center pt-4">
       <script src="/pdfjs/pdf.mjs" type="module" async/>
-      <form className="w-[768px]">
+      <form className="w-[768px]" action={handleSave}>
         <Edition onBookSelected={handleBookSelected} />
+        <div>
+          <button type="submit">Save Book</button>
+        </div>
         <div>
           {(loading || displayData) && (
             <div className="flex p-4 md:flex-row flex-col space-x-6">
