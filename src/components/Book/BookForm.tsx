@@ -2,6 +2,7 @@
 
 import  parse from 'html-react-parser';
 import { Edition } from "./Form/Edition";
+import { CoverSelector } from "./Form/CoverSelector";
 import { googleBookApi } from "@/services/GoogleBookAPI";
 import { BookDetails } from "@/components/Book/types";
 import { useEffect, useState } from "react";
@@ -14,6 +15,7 @@ export function BookForm() {
   const [loading, setLoading] = useState<boolean>(false);
   const [bookFileContent, setBookFileContent] = useState<string | ArrayBuffer | null>(null);
   const [bookFileType, setBookFileType] = useState<string>('');
+  const [coverData, setCoverData] = useState<Blob>();
 
   function handleBookSelected(file: File): void {
     const r = new FileReader();
@@ -41,6 +43,10 @@ export function BookForm() {
     }
   }
 
+  function handleCoverSelected(coverData: Blob) {
+    setCoverData(coverData);
+  }
+
   return (
     <div className=" flex justify-center items-center pt-4">
       <script src="/pdfjs/pdf.mjs" type="module" async/>
@@ -50,13 +56,7 @@ export function BookForm() {
           {(loading || displayData) && (
             <div className="flex p-4 md:flex-row flex-col space-x-6">
               <div className="flex-initial md:basis-1/5">
-                {loading ? <Skeleton width={150} height={200}/> : <img
-                  src={displayData?.coverImage.imageSrc}
-                  width="150px"
-                  alt={displayData?.title}
-                  title={displayData?.title}
-                  className="border-2 p-2 rounded-md shadow-lg min-w-full"
-                />}
+                <CoverSelector width={150} height={200} content={bookFileContent} type={bookFileType} onCoverSelected={handleCoverSelected}/>
               </div>
               <div className="flex flex-col space-y-3 md:basis-4/5">
                 <div className="text-4xl font-bold">{displayData?.title || <Skeleton />}</div>
